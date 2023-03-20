@@ -1,0 +1,14 @@
+{
+  "targets": {
+    "personal-diary-24924": {
+      "hosting": {
+        "personal-diary": [
+          "personal-diary-24924"
+        ]
+      }
+    }
+  },
+  "projects": {
+    "default": "personal-diary-24924"
+  }
+}

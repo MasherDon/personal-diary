@@ -1,0 +1,22 @@
+<app-cap></app-cap>
+<!--button type="button" pButton (click)="" class="p-button-secondary"></button-->
+<p-toast position="bottom-center" key="notRegister" (onClose)="onWin()">
+  <ng-template pTemplate="message">
+    <div class="p-flex p-flex-column" style="flex: 1">
+      <div class="p-text-center">
+        <i class="pi pi-exclamation-triangle" style="font-size: 3rem"></i>
+        <h4>{{ 'toast.notAuthorized' | translate }}</h4>
+      </div>
+      <div class="p-grid p-fluid">
+        <div class="p-col-6">
+          <button type="button" pButton [label] = "'fallItems.SignIn' | translate" class="p-button-secondary"></button>
+        </div>
+        <div class="p-col-6">
+          <button type="button" pButton [label] = "'fallItems.Registration' | translate" class="p-button-secondary"></button>
+        </div>
+      </div>
+    </div>
+  </ng-template>
+</p-toast>
+<router-outlet></router-outlet>
+

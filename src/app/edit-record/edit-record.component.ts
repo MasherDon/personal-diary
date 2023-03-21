@@ -6,5 +6,5 @@ import { Component } from '@angular/core';
   styleUrls: ['./edit-record.component.css']
 })
 export class EditRecordComponent {
-
+  text: string = '';
 }

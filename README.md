@@ -1,31 +1,27 @@
-# Личный дневник
+# PersonalDiary
 
-> Тренировачный проект. В самом начале разработки.
+This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 13.3.5.
 
-## Задание:
+## Development server
 
-Необходимо разработать SPA web – приложение «Личный дневник».
+Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
 
-## Основные цели:
+## Code scaffolding
 
-+ Приложение должно быть реализовано с помощью Angular CLI.
-+ Главное окно приложения должно отображать список записей дневника.
-+ Записи должны включать в себя форматированный текст (курсивный, жирный, подчеркнутый). 
-+ Реализовать возможность добавления, редактирования и удаления записей.
-+ Записи должны выводиться в хронологическом порядке, от самой свежей к более поздним.
+Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
 
-## Дополнительные цели:
+## Build
 
-+ Добавить в записи возможность прикрепления изображений.
-+	Реализовать операции редактирования и создания по отдельному URL (к примеру, http://<host>/edit) используя Angular routes.
-+	Реализовать вывод записей с использованием бесконечной прокрутки (Lazy Loading).
-+	Реализовать аутентификацию и авторизацию пользователя.
+Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
 
-## Возможности:
+## Running unit tests
 
-+	Разрешено использовать библиотеки графических компонентов, рекомендовано PrimeNG.
-+	Для редактирования записей разрешено использовать библиотеки редакторов: Draft.js или Editor.js.
-+	Для хранения данных разрешено использовать localstorage, indexeddb и прочие браузерные хранилища, так же плюсом будет использование сервисов таких как firebase.
-+	При реализации аутентификации и авторизации так-же можно пользоваться сервисами на подобие firebase.
-+	Разрешено использование CSS препроцессоров.
-+	Дизайн приложения реализовывается на вкус кандидата.
+Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+
+## Running end-to-end tests
+
+Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
+
+## Further help
+
+To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.

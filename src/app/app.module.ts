@@ -20,6 +20,16 @@ import { AvatarModule } from 'primeng/avatar';
 import { MenuModule } from 'primeng/menu';
 import { CalendarModule } from 'primeng/calendar';
 import { ToastModule } from "primeng/toast";
+import { VirtualScrollerModule } from 'primeng/virtualscroller';
+import { SkeletonModule } from 'primeng/skeleton';
+import { EditorModule } from 'primeng/editor';
+
+import { InputTextModule } from 'primeng/inputtext';
+import { DropdownModule } from 'primeng/dropdown';
+
+import { StartTranslateService } from './starttranslate.service';
+import { AuthService } from './auth.service';
+import { RecordsService } from "./records.service";
 
 import { AppComponent } from './app.component';
 import { CapComponent } from './cap/cap.component';
@@ -31,15 +41,16 @@ import { NotFoundComponent } from './not-found/not-found.component';
 import { RegisterComponent } from './register/register.component';
 import { LoginComponent } from './login/login.component';
 import { SearchComponent } from './search/search.component';
+import { OptionsComponent } from './options/options.component';
 
 const routes: Routes = [
   { path: '', component: RecordsComponent },
   { path: 'add', component: AddRecordComponent },
   { path: 'login', component: LoginComponent },
-  { path: 'login', component: LoginComponent },
-  { path: 'register', component: RegisterComponent },
+  { path: 'registration', component: RegisterComponent },
   { path: 'search', component: SearchComponent },
-  { path: 'record/edit', component: EditRecordComponent },
+  { path: 'record/:recordId', component: RecordComponent },
+  { path: 'record/:recordId/edit', component: EditRecordComponent },
   { path: '**', component: NotFoundComponent },
 ];
 
@@ -59,6 +70,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     RegisterComponent,
     LoginComponent,
     SearchComponent,
+    OptionsComponent,
   ],
   imports: [
     BrowserModule,
@@ -73,6 +85,7 @@ export function HttpLoaderFactory(http: HttpClient) {
         useFactory: HttpLoaderFactory,
         deps: [HttpClient],
       },
+      defaultLanguage: 'ru',
     }),
     BrowserAnimationsModule,
     ButtonModule,
@@ -83,9 +96,16 @@ export function HttpLoaderFactory(http: HttpClient) {
     MenuModule,
     CalendarModule,
     ToastModule,
+    VirtualScrollerModule,
+    SkeletonModule,
+    EditorModule,
   ],
-  providers: [],
+  providers: [
+    StartTranslateService,
+    AuthService,
+    RecordsService,
+  ],
   bootstrap: [AppComponent]
 })
-export class AppModule {
-}
+
+export class AppModule {}

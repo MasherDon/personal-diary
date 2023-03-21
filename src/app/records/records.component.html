@@ -1,3 +1,26 @@
-<p>records works!</p>
+<div class="records">
+  <div class="field col-12 md:col-4">
+    <p-calendar  [(ngModel)]="date" [showButtonBar]="true" selectionMode="range" [showIcon]="true"></p-calendar>
+  </div>
+  <p-virtualScroller
+    [value]="virtualProducts"
+    scrollHeight="450px"
+    [itemSize]="100"
+    [lazy]="true"
+  >
+    <ng-template let-product pTemplate="item">
+      <div class="product-item">
+        <div class="product-list-detail">
+        </div>
+        <div class="product-list-action">
+        </div>
+      </div>
+    </ng-template>
+    <ng-template let-product pTemplate="loadingItem">
+      <p-skeleton height="90px" [style]="{ 'margin-top': '10px' }"></p-skeleton>
+    </ng-template>
+  </p-virtualScroller>
+</div>
+{{ date }}
 {{ 'mainMenu.Diary' | translate }}
-<!--<p-calendar [(ngModel)]="date" [inline]="true" [showWeek]="true"></p-calendar>-->
+

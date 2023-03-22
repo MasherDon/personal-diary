@@ -35,6 +35,7 @@
     "dayNamesMin": ["Su","Mo","Tu","We","Th","Fr","Sa"],
     "monthNames": ["January","February","March","April","May","June","July","August","September","October","November","December"],
     "monthNamesShort": ["Jan", "Feb", "Mar", "Apr", "May", "Jun","Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
+    "dateFormat": "mm/dd/yy",
     "firstDayOfWeek": 0,
     "today": "Today",
     "weekHeader": "Wk",
@@ -47,7 +48,7 @@
   },
   "mainMenu": {
     "Diary": "Diary",
-    "Recording": "Recording",
+    "Recording": "Recordings",
     "Add": "Add",
     "SearchAndEdit": "Search and edit"
   },
@@ -63,6 +64,6 @@
   },
   "toast": {
     "notAuthorized": "No authorization!",
-    "notSave": "Want to login to save?"
+    "notSave": "Want to login to save data?"
   }
 }

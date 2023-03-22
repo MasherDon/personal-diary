@@ -27,9 +27,10 @@ import { EditorModule } from 'primeng/editor';
 import { InputTextModule } from 'primeng/inputtext';
 import { DropdownModule } from 'primeng/dropdown';
 
-import { StartTranslateService } from './starttranslate.service';
-import { AuthService } from './auth.service';
-import { RecordsService } from "./records.service";
+//import { StartTranslateService } from './starttranslate.service';
+//import { AuthService } from './auth.service';
+//import { RecordsService } from "./records.service";
+//import { MessageService } from "primeng/api";
 
 import { AppComponent } from './app.component';
 import { CapComponent } from './cap/cap.component';
@@ -42,6 +43,7 @@ import { RegisterComponent } from './register/register.component';
 import { LoginComponent } from './login/login.component';
 import { SearchComponent } from './search/search.component';
 import { OptionsComponent } from './options/options.component';
+import { ToastComponent } from './toast/toast.component';
 
 const routes: Routes = [
   { path: '', component: RecordsComponent },
@@ -71,6 +73,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     LoginComponent,
     SearchComponent,
     OptionsComponent,
+    ToastComponent,
   ],
   imports: [
     BrowserModule,
@@ -100,11 +103,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     SkeletonModule,
     EditorModule,
   ],
-  providers: [
-    StartTranslateService,
-    AuthService,
-    RecordsService,
-  ],
+  providers: [],
   bootstrap: [AppComponent]
 })
 

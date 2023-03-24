@@ -5,7 +5,8 @@ import { TranslateService } from '@ngx-translate/core';
 @Injectable({
   providedIn: 'root'
 })
-export class StartTranslateService {
+
+export class PageTranslateService {
   constructor(private config: PrimeNGConfig, private translateService: TranslateService) {
   }
 
@@ -13,13 +14,18 @@ export class StartTranslateService {
     this.translateService.get('primeng').subscribe(res => this.config.setTranslation(res));
   }
 
-  start() {
+  getLang() {
+    return this.translateService.getDefaultLang();
+  }
+
+  startTranslate() {
     this.translateService.addLangs(['en', 'ru']);
-    this.translateService.setDefaultLang('ru');
-    let browserLang = this.translateService.getBrowserLang();
+    const browserLang = this.translateService.getBrowserLang();
     if (browserLang) {
       const lang = browserLang.match(/en/)? browserLang : 'ru';
-      if (lang !== 'ru') this.translateService.use(lang);
+      this.translateService.setDefaultLang(lang);
+    } else {
+      this.translateService.setDefaultLang('ru');
     }
   }
 }

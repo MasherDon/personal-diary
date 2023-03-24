@@ -1,103 +1,77 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { MenuItem } from "primeng/api";
 import { TranslateService } from '@ngx-translate/core';
+import { UserData } from '../userData';
+import {ToastService} from "../toast.service";
+import {SigOrReg} from "../sigOrReg";
 
 @Component({
   selector: 'app-cap',
   templateUrl: './cap.component.html',
-  styleUrls: ['./cap.component.css'],
+  styleUrls: ['./cap.component.css']
 })
 
 export class CapComponent {
-  user: string = 'https://ie.wampi.ru/2023/03/19/9ringpaJHV4.jpg';
-  mainItems!: MenuItem[];
-  fallItems!: MenuItem[];
-  altItems!: MenuItem[];
+  constructor(private translateService: TranslateService, public toastService: ToastService) {}
 
-  bool: string[] = [
+  @Input() data!: UserData;
+  @Input() lang!: string;
+  @Input() sigOrReg!: SigOrReg;
+
+  mainItems!: MenuItem[];
+  language!: string;
+
+  translationArray: string[] = [
     "mainMenu.Diary",
     "mainMenu.Recording",
     "mainMenu.Add",
-    "mainMenu.SearchAndEdit",
-    "fallItems.Authorization",
-    "fallItems.SignIn",
-    "fallItems.Registration",
-    "altItems.Control",
-    "altItems.Options",
-    "altItems.SignOut",
+    "mainMenu.Search"
   ];
 
-  constructor(private translateService: TranslateService) {}
+  ngOnInit() {
+    this.language = this.lang;
+    this.translateAll();
+  }
+
+  ngOnChanges() {
+    if (this.language !== this.lang) {
+      this.language = this.lang;
+      this.translateAll();
+    }
+  }
 
   translateAll() {
-    for (let value = 0; value < this.bool.length; value++) {
-      this.translateService.get(this.bool[value]).subscribe((res: string) => {
-        this.bool[value] = '' + res;
+    for (let value = 0; value < this.translationArray.length; value++) {
+      this.translateService.get(this.translationArray[value]).subscribe((res: string) => {
+        this.translationArray[value] = '' + res;
       });
     }
+    setTimeout(() => this.setTranslate(), 100);
   }
 
   setTranslate() {
     this.mainItems = [
       {
-        label: this.bool[0],
+        label: this.translationArray[0],
         icon:'pi pi-home',
         routerLink: ['/'],
       },
       {
-        label: this.bool[1],
+        label: this.translationArray[1],
         icon:'pi pi-fw pi-pencil',
         items:[
           {
-            label: this.bool[2],
+            label: this.translationArray[2],
             icon:'pi pi-plus',
             routerLink: ['/add'],
           },
           {
-            label: this.bool[3],
+            label: this.translationArray[3],
             icon: 'pi pi-search',
             routerLink: ['/search'],
           },
         ]
       }
     ];
-    this.fallItems = [
-      {
-        label: this.bool[4],
-        items: [
-          {
-            label: this.bool[5],
-            icon: 'pi pi-sign-in',
-            routerLink: ['/login'],
-          },
-          {
-            label: this.bool[6],
-            icon: 'pi pi-user-plus',
-            routerLink: ['/register'],
-          }
-        ]
-      },
-    ];
-    this.altItems = [
-      {
-        label: this.bool[7],
-        items: [
-          {
-            label: this.bool[7],
-            icon: 'pi pi-user-plus',
-            routerLink: ['/register'],
-          },
-          {
-            label: this.bool[8],
-            icon: 'pi pi-sign-out',
-          },
-        ]
-      }
-    ];
-  }
-
-  ngOnInit() {
-    this.translateAll();
-    setTimeout(() => this.setTranslate(), 100);
   }
 }

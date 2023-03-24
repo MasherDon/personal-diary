@@ -50,14 +50,12 @@
     "Diary": "Дневник",
     "Recording": "Записи",
     "Add": "Добавить",
-    "SearchAndEdit": "Найти и изменить"
+    "Search": "Найти"
   },
-  "fallItems": {
+  "sidebar": {
     "Authorization": "Авторизация",
     "SignIn": "Вход",
-    "Registration": "Регистрация"
-  },
-  "altItems": {
+    "Registration": "Регистрация",
     "Control": "Управление",
     "Options": "Опции",
     "SignOut": "Выход"

@@ -1,15 +1,16 @@
 import { Component } from '@angular/core';
 import { LazyLoadEvent } from 'primeng/api';
-import { StartTranslateService } from "../starttranslate.service";
+import { PageTranslateService } from "../pageTranslate.service";
+import { RecordsService } from "../records.service";
 
 @Component({
   selector: 'app-records',
   templateUrl: './records.component.html',
-  styleUrls: ['./records.component.css']
+  styleUrls: ['./records.component.css'],
+  providers: [RecordsService]
 })
 
 export class RecordsComponent {
-  date: Date[] = [];
   virtualProducts: any = [];
 
   // loadCarsLazy(event: LazyLoadEvent) {

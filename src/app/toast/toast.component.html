@@ -1,4 +1,5 @@
-<p-toast position="bottom-left" key="notRegister" (onClose)="onWin()">
+<p-toast position="bottom-left" key="notRegister"
+         (onClose)="close()" [showTransformOptions]="'translateY(100%)'">
   <ng-template pTemplate="message">
     <div class="p-flex p-flex-column" style="flex: 1">
       <div class="p-text-center">
@@ -7,11 +8,11 @@
         <p>{{ 'toast.notSave' | translate }}</p>
       </div>
       <div class="p-grid p-fluid">
-        <div class="p-col-6">
-          <button type="button" (click)="onWin()" [routerLink]="['./login']" pButton [label] = "'fallItems.SignIn' | translate" class="p-button-success"></button>
+        <div class="p-col-6 m-1">
+          <button type="button" (click)="sig()" pButton [label] = "'sidebar.SignIn' | translate" class="p-button-success"></button>
         </div>
-        <div class="p-col-6">
-          <button type="button" (click)="onWin()" [routerLink]="['./registration']" pButton [label] = "'fallItems.Registration' | translate" class="p-button-warning"></button>
+        <div class="p-col-6 m-1">
+          <button type="button" (click)="reg()" pButton [label] = "'sidebar.Registration' | translate" class="p-button-warning"></button>
         </div>
       </div>
     </div>

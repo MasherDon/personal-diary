@@ -1,4 +1,3 @@
-<app-cap></app-cap>
-<app-toast [question]="question"></app-toast>
+<app-cap [data]="authService.getData()" [lang]="startTranslate.getLang()" [sigOrReg]="toastService.getSigOrReg()"></app-cap>
+<app-toast [data]="toastService.getToast()"></app-toast>
 <router-outlet></router-outlet>
-

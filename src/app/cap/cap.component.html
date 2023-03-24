@@ -1,9 +1,16 @@
 <p-menubar [model]="mainItems" [autoDisplay]="true" [autoHide]="true">
   <ng-template pTemplate="start">
-    <img src="https://im.wampi.ru/2023/03/19/pngwing.com.png" height="45" class="mr-2" alt="diary">
+    <img src="https://im.wampi.ru/2023/03/19/pngwing.com.png" height="45" class="mr-1" alt="diary">
   </ng-template>
   <ng-template pTemplate="end">
-    <p-avatar [image]="user" styleClass="mr-2" size="large" shape="circle" (click)="menu.toggle($event)"></p-avatar>
-    <p-menu #menu [popup]="true" [model]="fallItems"></p-menu>
+    <p-avatar [image]="data.image" styleClass="mr-2" size="large" shape="circle"
+              (click)="toastService.setSigOrReg(true,false)"></p-avatar>
+    <p-sidebar [(visible)]="sigOrReg.onWin" position="right" (onHide)="toastService.setSigOrReg(false,false)"
+               [blockScroll]="true" styleClass="w-30rem">
+      <ng-template pTemplate="header"><h2>{{ sigOrReg.sigOrReg?('sidebar.Control'|translate):('sidebar.Authorization'|translate)}}</h2></ng-template>
+      <ng-template pTemplate="content">Body Content</ng-template>
+      <ng-template pTemplate="footer">Footer Content</ng-template>
+      <app-sidebar [data]="data" [sigOrReg]="sigOrReg"></app-sidebar>
+    </p-sidebar>
   </ng-template>
 </p-menubar>

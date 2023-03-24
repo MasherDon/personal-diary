@@ -50,14 +50,12 @@
     "Diary": "Diary",
     "Recording": "Recordings",
     "Add": "Add",
-    "SearchAndEdit": "Search and edit"
+    "Search": "Search"
   },
-  "fallItems": {
+  "sidebar": {
     "Authorization": "Authorization",
     "SignIn": "Sign in",
-    "Registration": "Registration"
-  },
-  "altItems": {
+    "Registration": "Registration",
     "Control": "Control",
     "Options": "Options",
     "SignOut": "Sign out"

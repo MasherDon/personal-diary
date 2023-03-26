@@ -17,11 +17,6 @@ export class CapComponent {
     sigOrReg: 0
   }
 
-  closeWin() {
-    this.onSidebar.onWin = false;
-    this.onSidebar.sigOrReg = 0;
-  }
-
   // ngOnInit() {
   //
   // }

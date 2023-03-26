@@ -7,5 +7,5 @@
   </ng-template>
 </p-menubar>
 <app-toast [dataToast]="toastService.getToast()" [onSidebar]="onSidebar" (clickButton)="changeSigOrReg($event)"></app-toast>
-<app-sidebar [userDate]="authService.getUserDate()" [sigOrReg]="onSidebar.sigOrReg" [onSidebar]="onSidebar" (closeWin)="closeWin()"></app-sidebar>
+<app-sidebar [userDate]="authService.getUserDate()" [sigOrReg]="onSidebar.sigOrReg" [onSidebar]="onSidebar" (closeWin)="this.onSidebar.onWin = false;"></app-sidebar>
 

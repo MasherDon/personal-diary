@@ -1,14 +1,32 @@
-import { Component, Input } from '@angular/core';
-import { UserData } from "../userData";
-import { SigOrReg } from "../sigOrReg";
+import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { SidebarIs } from "../interface/sidebarIs";
+import { UserData } from "../interface/userData";
+import { AuthService } from "../service/auth.service";
 
 @Component({
   selector: 'app-sidebar',
   templateUrl: './sidebar.component.html',
-  styleUrls: ['./sidebar.component.css']
+  styleUrls: ['./sidebar.component.css'],
 })
 
 export class SidebarComponent {
-  @Input() data!: UserData;
-  @Input() sigOrReg!: SigOrReg;
+  constructor(public authService: AuthService) {}
+
+  @Input() userDate!: UserData;
+  @Input() onSidebar!: SidebarIs;
+  @Input() sigOrReg!: number;
+  @Output() closeWin = new EventEmitter();
+
+  active: number = 0;
+
+  ngOnChanges() {
+    this.active = this.sigOrReg;
+    //console.log(this.sigOrReg);
+    //this.active = this.onSidebar.sigOrReg;
+  }
+
+  // ngOnInit() {
+  //   this.active = this.sigOrReg;
+  //   console.log(this.sigOrReg);
+  // }
 }

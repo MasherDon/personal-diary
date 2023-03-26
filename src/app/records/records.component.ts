@@ -1,13 +1,12 @@
 import { Component } from '@angular/core';
 import { LazyLoadEvent } from 'primeng/api';
-import { PageTranslateService } from "../pageTranslate.service";
-import { RecordsService } from "../records.service";
+import { StartTranslateService } from "../service/startTranslate.service";
+import { RecordsService } from "../service/records.service";
 
 @Component({
   selector: 'app-records',
   templateUrl: './records.component.html',
   styleUrls: ['./records.component.css'],
-  providers: [RecordsService]
 })
 
 export class RecordsComponent {

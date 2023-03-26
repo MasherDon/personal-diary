@@ -1,50 +1,44 @@
-import { Component, Input } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { MessageService } from "primeng/api";
-import { ToastService } from "../toast.service";
-import { Toast } from "../toast";
+import {Toast} from "../interface/toast";
+import {SidebarIs} from "../interface/sidebarIs";
+import {ToastService} from "../service/toast.service";
 
 @Component({
   selector: 'app-toast',
   templateUrl: './toast.component.html',
   styleUrls: ['./toast.component.css'],
-  providers: [MessageService, ToastService]
+  providers: [MessageService]
 })
 
 export class ToastComponent {
   constructor(public messageService: MessageService, public toastService: ToastService) {}
 
-  @Input() data!: Toast;
-
-  // ngOnInit() {
-  //   if(this.toastService.getQuestions()) {
-  //     setTimeout(() =>this.showConfirm(),1000);
-  //   }
-  // }
+  @Input() onSidebar!: SidebarIs;
+  @Input() dataToast!: Toast;
+  @Output() clickButton = new EventEmitter();
 
   ngOnChanges() {
-    if(this.data.notRegister) {
+    if(this.dataToast.notRegister) {
       this.toastService.setToast('notRegister',false);
-      setTimeout(() =>this.ofNotRegister(),1);
+      setTimeout(() =>this.offNotRegister(),1);
     }
   }
 
-  close() {
-    this.onNotRegister();
-  }
-
   sig() {
+    this.clickButton.emit(0)
     this.onNotRegister();
-    this.toastService.setSigOrReg(true,false);
   }
 
   reg() {
+    this.clickButton.emit(1)
     this.onNotRegister();
-    this.toastService.setSigOrReg(true,true);
   }
 
-  ofNotRegister() {
+  offNotRegister() {
     this.messageService.add({key: 'notRegister', sticky: true, severity:'warn'});
   }
+
   onNotRegister() {
     this.messageService.clear('notRegister');
   }

@@ -1,2 +1,35 @@
-<!--<p-avatar [image]="data.image" styleClass="mr-2" size="xlarge" shape="circle"></p-avatar>-->
-<!--<h1>{{ data.userName }}</h1>-->
+<p-sidebar [visible]="onSidebar.onWin" position="right" (onHide)="closeWin.emit()"
+           [blockScroll]="true" styleClass="w-30rem">
+  <ng-template pTemplate="header">
+    <h2 style="margin: 0">{{ authService.getSigIn?('sidebar.Authorization'|translate ):('sidebar.Control'|translate)}}</h2>
+  </ng-template>
+  <ng-template pTemplate="content">
+    <div *ngIf="authService.getSigIn">
+      <p-tabView [(activeIndex)]="active" styleClass="tabview-custom">
+        <p-tabPanel>
+          <ng-template pTemplate="header">
+            <i class="pi pi-calendar m-1"></i>
+            <span>{{ 'sidebar.SignIn'|translate }}</span>
+          </ng-template>
+          <app-login></app-login>
+        </p-tabPanel>
+        <p-tabPanel header="Header II">
+          <ng-template pTemplate="header">
+            <i class="pi pi-user m-1"></i>
+            <span>{{ 'sidebar.Registration'|translate }}</span>
+          </ng-template>
+          <app-register></app-register>
+        </p-tabPanel>
+      </p-tabView>
+    </div>
+    <div *ngIf="!authService.getSigIn" class="p-card">
+        <!--<p-avatar [image]="data.image" styleClass="mr-2" size="xlarge" shape="circle"></p-avatar>-->
+        <!--<h1>{{ data.userName }}</h1>-->
+    </div>
+  </ng-template>
+  <ng-template pTemplate="footer">
+
+  </ng-template>
+</p-sidebar>
+
+

@@ -1,3 +1,3 @@
-export interface Toast{
+export interface Toast {
   notRegister: boolean,
 }

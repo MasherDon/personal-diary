@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { Router } from "@angular/router";
-import { UserData } from './userData';
+import { UserData } from '../interface/userData';
 
 @Injectable({
   providedIn: 'root'
@@ -10,20 +10,31 @@ import { UserData } from './userData';
 export class AuthService {
   constructor(private fireAuth: AngularFireAuth, private router: Router) { }
 
-  data: UserData = {
-    image: 'https://ie.wampi.ru/2023/03/19/9ringpaJHV4.jpg'
-  }
+  data!: UserData;
+  sigIn: boolean = false;
 
   generate() {
-    localStorage.setItem('userData', JSON. stringify(this.data));
+    this.data = {
+      userName: 'User',
+      image: 'https://ie.wampi.ru/2023/03/19/9ringpaJHV4.jpg'
+    }
   }
 
-  getData() {
-    return JSON.parse(localStorage.getItem('userData')||'');
+  startAuth() {
+    this.generate();
+
   }
 
-  isAuth() {
-    return Boolean(localStorage.getItem('auth')||'false');
+  getSigIn() {
+    return this.sigIn;
+  }
+
+  gatImage() {
+    return this.data.image;
+  }
+
+  getUserDate() {
+    return this.data;
   }
 
   login(email: string, password: string) {

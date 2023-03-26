@@ -5,6 +5,7 @@ import { Component } from '@angular/core';
   templateUrl: './edit-record.component.html',
   styleUrls: ['./edit-record.component.css']
 })
+
 export class EditRecordComponent {
   text: string = '';
 }

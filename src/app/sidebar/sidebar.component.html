@@ -1,34 +1,77 @@
 <p-sidebar [visible]="onSidebar.onWin" position="right" (onHide)="closeWin.emit()"
            [blockScroll]="true" styleClass="w-30rem">
   <ng-template pTemplate="header">
-    <h2 style="margin: 0">{{ authService.getSigIn?('sidebar.Authorization'|translate ):('sidebar.Control'|translate)}}</h2>
+    <h2 style="margin: 0">{{sigIn?('sidebar.control'|translate):('sidebar.authorization'|translate)}}</h2>
   </ng-template>
   <ng-template pTemplate="content">
-    <div *ngIf="authService.getSigIn">
-      <p-tabView [(activeIndex)]="active" styleClass="tabview-custom">
+    <p-scrollPanel [style]="{ width: '100%', height: '100%' }">
+      <p-tabView *ngIf="!sigIn" [(activeIndex)]="active" styleClass="tabview-custom">
         <p-tabPanel>
           <ng-template pTemplate="header">
-            <i class="pi pi-calendar m-1"></i>
-            <span>{{ 'sidebar.SignIn'|translate }}</span>
+            <i class="pi pi-sign-in mr-2"></i>
+            <span>{{ 'sidebar.signIn'|translate }}</span>
           </ng-template>
           <app-login></app-login>
         </p-tabPanel>
         <p-tabPanel header="Header II">
           <ng-template pTemplate="header">
-            <i class="pi pi-user m-1"></i>
-            <span>{{ 'sidebar.Registration'|translate }}</span>
+            <i class="pi pi-user mr-2"></i>
+            <span>{{ 'sidebar.registration'|translate }}</span>
           </ng-template>
           <app-register></app-register>
         </p-tabPanel>
+        <!--        <p-tabPanel header="Header III" *ngIf="active === 2">-->
+        <!--          <ng-template pTemplate="header">-->
+        <!--            <i class="pi pi-search mr-2"></i>-->
+        <!--            <span>{{  }}</span>-->
+        <!--          </ng-template>-->
+
+        <!--        </p-tabPanel>-->
       </p-tabView>
-    </div>
-    <div *ngIf="!authService.getSigIn" class="p-card">
-        <!--<p-avatar [image]="data.image" styleClass="mr-2" size="xlarge" shape="circle"></p-avatar>-->
-        <!--<h1>{{ data.userName }}</h1>-->
-    </div>
+      <div *ngIf="sigIn" class="p-card">
+        <p-avatar [image]="userDate.image" styleClass="mr-2" size="xlarge" shape="circle"></p-avatar>
+        <h1>{{ userDate.userName }}</h1>
+      </div>
+      <div class="m-1">
+        <p-accordion>
+          <p-accordionTab *ngIf="sigIn">
+            <ng-template pTemplate="header">
+              <div class="flex align-items-center">
+                <i class="pi pi-user mr-2"></i>
+                <span class="vertical-align-middle">{{ 'sidebar.userData'|translate }}</span>
+              </div>
+            </ng-template>
+            <ng-template pTemplate="content">
+
+            </ng-template>
+          </p-accordionTab>
+          <p-accordionTab>
+            <ng-template pTemplate="header">
+              <div class="flex align-items-center">
+                <i class="pi pi-cog mr-2"></i>
+                <span class="vertical-align-middle">{{ 'sidebar.options'|translate }}</span>
+              </div>
+            </ng-template>
+            <ng-template pTemplate="content">
+              <div class="flex justify-content-center">
+                <p-dropdown styleClass="w-18rem" [options]="langArray" [(ngModel)]="lang"
+                            (onChange)="setLanguage(lang)" optionLabel="lang"></p-dropdown>
+              </div>
+              <br>
+              <div class="flex justify-content-center">
+                <p-toggleButton [(ngModel)]="darkTheme" [onLabel]="'sidebar.defaultTheme'|translate " [offLabel]="'sidebar.darkTheme'|translate"
+                                styleClass="w-15rem" onIcon="pi pi-sun" offIcon="pi pi-moon"></p-toggleButton>
+              </div>
+            </ng-template>
+          </p-accordionTab>
+        </p-accordion>
+      </div>
+    </p-scrollPanel>
   </ng-template>
   <ng-template pTemplate="footer">
-
+    <div class="flex flex-row justify-content-center" *ngIf="sigIn">
+      <p-button icon="pi pi-sign-out" [label]="'sidebar.signIn'|translate" styleClass="p-button-raised p-button-danger"></p-button>
+    </div>
   </ng-template>
 </p-sidebar>
 

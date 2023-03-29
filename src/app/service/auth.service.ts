@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { Router } from "@angular/router";
 import { UserData } from '../interface/userData';
+import {error} from "@angular/compiler-cli/src/transformers/util";
 
 @Injectable({
   providedIn: 'root'
@@ -15,14 +16,13 @@ export class AuthService {
 
   generate() {
     this.data = {
-      userName: 'User',
+      userName: 'Not authorized user',
       image: 'https://ie.wampi.ru/2023/03/19/9ringpaJHV4.jpg'
     }
   }
 
   startAuth() {
     this.generate();
-
   }
 
   getSigIn() {
@@ -37,32 +37,32 @@ export class AuthService {
     return this.data;
   }
 
-  login(email: string, password: string) {
-    this.fireAuth.signInWithEmailAndPassword(email, password).then( () => {
-      localStorage.setItem('auth', 'true');
-      this.router.navigate(['/']).then();
-    }, err => {
-      alert(err.message);
-      this.router.navigate(['/login']).then();
+  login(email:string, password: string) {
+    this.fireAuth.signInWithEmailAndPassword(email, password)
+      .then((user) => {
+        localStorage.setItem('auth', 'true');
+
+    }).catch((error) => {
+
     })
   }
 
   register(email: string, password: string) {
-    this.fireAuth.createUserWithEmailAndPassword(email, password).then( () => {
-      alert('register');
-      this.router.navigate(['/login']).then();
-    }, err => {
-      alert(err.message);
-      this.router.navigate(['/register']).then();
+    this.fireAuth.createUserWithEmailAndPassword(email, password)
+      .then((user) => {
+      //localStorage.setItem('auth', 'true');
+      console.log(user)
+    }).catch((error) => {
+      console.log(error)
     })
   }
 
   logout() {
     this.fireAuth.signOut().then( () => {
       localStorage.removeItem('auth');
-      this.router.navigate(['/login']).then();
+      //this.router.navigate(['/login']).then();
     }, err => {
-      alert(err.message);
+      //alert(err.message);
     });
   }
 }

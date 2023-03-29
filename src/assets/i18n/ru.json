@@ -47,21 +47,31 @@
     "emptyFilterMessage": "Результатов не найдено"
   },
   "mainMenu": {
-    "Diary": "Дневник",
-    "Recording": "Записи",
-    "Add": "Добавить",
-    "Search": "Найти"
+    "diary": "Дневник",
+    "recording": "Записи",
+    "add": "Добавить",
+    "search": "Найти"
   },
   "sidebar": {
-    "Authorization": "Авторизация",
-    "SignIn": "Вход",
-    "Registration": "Регистрация",
-    "Control": "Управление",
-    "Options": "Опции",
-    "SignOut": "Выход"
+    "authorization": "Авторизация",
+    "signIn": "Вход",
+    "registration": "Регистрация",
+    "control": "Управление",
+    "options": "Опции",
+    "signOut": "Выход",
+    "userData": "Данные пользователя",
+    "language": "Язык",
+    "darkTheme": "Темная тема",
+    "defaultTheme": "Стандартая тема"
   },
   "toast": {
     "notAuthorized": "Нет авторизации!",
     "notSave": "Хотите войдити для сохранения данных?"
+  },
+  "form": {
+    "email": "Электронная почта",
+    "password": "Пароль",
+    "nickname": "Псевдоним",
+    "repetPassword": "Повтор пароля"
   }
 }

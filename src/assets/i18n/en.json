@@ -47,21 +47,31 @@
     "emptyFilterMessage": "No results found"
   },
   "mainMenu": {
-    "Diary": "Diary",
-    "Recording": "Recordings",
-    "Add": "Add",
-    "Search": "Search"
+    "diary": "Diary",
+    "recording": "Recordings",
+    "add": "Add",
+    "search": "Search"
   },
   "sidebar": {
-    "Authorization": "Authorization",
-    "SignIn": "Sign in",
-    "Registration": "Registration",
-    "Control": "Control",
-    "Options": "Options",
-    "SignOut": "Sign out"
+    "authorization": "Authorization",
+    "signIn": "Sign in",
+    "registration": "Registration",
+    "control": "Control",
+    "options": "Options",
+    "signOut": "Sign out",
+    "userData": "User data",
+    "language": "Language",
+    "darkTheme": "Dark theme",
+    "defaultTheme": "Default theme"
   },
   "toast": {
     "notAuthorized": "No authorization!",
     "notSave": "Want to login to save data?"
+  },
+  "form": {
+    "email": "Email",
+    "password": "Password",
+    "nickname": "Nickname",
+    "repetPassword": "Repetitive password"
   }
 }

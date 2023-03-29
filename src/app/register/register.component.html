@@ -1,1 +1,39 @@
-<p>register works!</p>
+<form [formGroup]="registerForm" (ngSubmit)="register()">
+  <div class="flex flex-column">
+    <div class="flex justify-content-center">
+      <span class="p-float-label mt-2">
+        <input id="username" [pKeyFilter]="block" class="w-20rem" pInputText type="text" formControlName="userName"/>
+        <label htmlFor="username">{{ 'form.nickname'|translate }}</label>
+<!--        <small class="p-error block" *ngIf="registerForm.get('password')?.invalid && registerForm.get('password')?.dirty">FFF</small>-->
+      </span>
+    </div>
+    <br>
+    <div class="flex justify-content-center">
+      <span class="p-float-label mt-2">
+        <input id="emailRegister" class="w-20rem" pInputText type="email" formControlName="email"/>
+        <label htmlFor="emailRegister">{{ 'form.email'|translate }}</label>
+<!--        <small class="p-error block" *ngIf="registerForm.get('password')?.invalid && registerForm.get('password')?.dirty">FFF</small>-->
+      </span>
+    </div>
+    <p-divider type="solid" class="m-2"></p-divider>
+    <div class="flex justify-content-center mt-1">
+      <span class="p-float-label">
+        <p-password id="password" class="pass" styleClass="pass" [toggleMask]="true" pInputText formControlName="password"></p-password>
+        <label for="password">{{ 'form.password'|translate }}</label>
+<!--        <small class="p-error block" *ngIf="registerForm.get('password')?.invalid && registerForm.get('password')?.dirty">FFF</small>-->
+      </span>
+    </div>
+    <br>
+    <div class="flex justify-content-center mt-2">
+      <span class="p-float-label">
+        <p-password id="repeatPassword" class="pass" styleClass="pass" [feedback]="false" pInputText formControlName="repeatPassword"></p-password>
+        <label for="repeatPassword">{{ 'form.repetPassword'|translate }}</label>
+<!--        <small class="p-error block" *ngIf="loginForm.value.password !== loginForm.value.repeatPassword">KKK</small>-->
+      </span>
+    </div>
+    <br>
+    <div class="flex justify-content-center">
+      <p-button [label]="'sidebar.registration'|translate" type="submit" [disabled]="registerForm.invalid" styleClass="p-button-warning p-button-success"></p-button>
+    </div>
+  </div>
+</form>

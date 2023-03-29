@@ -12,16 +12,21 @@ export class StartTranslateService {
   mainItems!: MenuItem[];
   translationArray!: string[];
   arrayForTranslation: string[] = [
-    "mainMenu.Diary",
-    "mainMenu.Recording",
-    "mainMenu.Add",
-    "mainMenu.Search",
-    //"sidebar.SignIn",
-    //"sidebar.Registration"
+    "mainMenu.diary",
+    "mainMenu.recording",
+    "mainMenu.add",
+    "mainMenu.search",
   ];
+  languages: string[] = ['ru', 'en'];
+  instLanguages!: string;
+
+  getLanguage() {
+    return this.instLanguages;
+  }
 
   async setTranslate(lang: string) {
     this.translationArray = [];
+    this.instLanguages = lang;
     await this.translateService.use(lang).subscribe(() => {
       for (let n = 0; n < this.arrayForTranslation.length; n++) {
         this.translationArray.push(this.translateService.instant(this.arrayForTranslation[n]))
@@ -65,7 +70,7 @@ export class StartTranslateService {
   }
 
   startTranslate() {
-    this.translateService.addLangs(['en', 'ru']);
+    this.translateService.addLangs(this.languages);
     const browserLang = this.translateService.getBrowserLang()||'';
     const lang = browserLang.match(/en/)? browserLang : 'ru';
     this.setTranslate(lang).then();

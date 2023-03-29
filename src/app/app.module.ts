@@ -27,8 +27,15 @@ import { EditorModule } from 'primeng/editor';
 import { SidebarModule } from 'primeng/sidebar';
 import { RippleModule } from "primeng/ripple";
 import { TabViewModule } from 'primeng/tabview';
-
+import { AccordionModule } from 'primeng/accordion';
 import { InputTextModule } from 'primeng/inputtext';
+import { KeyFilterModule } from 'primeng/keyfilter';
+import { DividerModule } from 'primeng/divider';
+import { TooltipModule } from 'primeng/tooltip';
+import { PasswordModule } from 'primeng/password';
+import { ScrollPanelModule } from 'primeng/scrollpanel';
+import { DropdownModule } from 'primeng/dropdown';
+import { ToggleButtonModule } from 'primeng/togglebutton';
 
 import { AppComponent } from './app.component';
 import { CapComponent } from './cap/cap.component';
@@ -42,12 +49,12 @@ import { LoginComponent } from './login/login.component';
 import { SearchComponent } from './search/search.component';
 import { ToastComponent } from './toast/toast.component';
 import { SidebarComponent } from './sidebar/sidebar.component';
+import { OptionsComponent } from './options/options.component';
+import { ChangeUserDataComponent } from './change-user-data/change-user-data.component';
 
 const routes: Routes = [
   { path: '', component: RecordsComponent },
   { path: 'add', component: AddRecordComponent },
-  // { path: 'login', component: LoginComponent },
-  // { path: 'registration', component: RegisterComponent },
   { path: 'search', component: SearchComponent },
   { path: ':recordId', component: RecordComponent },
   { path: ':recordId/edit', component: EditRecordComponent },
@@ -79,6 +86,8 @@ export function appInitializerFactory(translate: TranslateService) {
     SearchComponent,
     ToastComponent,
     SidebarComponent,
+    OptionsComponent,
+    ChangeUserDataComponent,
   ],
   imports: [
     BrowserModule,
@@ -102,7 +111,6 @@ export function appInitializerFactory(translate: TranslateService) {
     FormsModule,
     ChipsModule,
     AvatarModule,
-    //MenuModule,
     CalendarModule,
     ToastModule,
     VirtualScrollerModule,
@@ -111,6 +119,15 @@ export function appInitializerFactory(translate: TranslateService) {
     SidebarModule,
     RippleModule,
     TabViewModule,
+    AccordionModule,
+    InputTextModule,
+    KeyFilterModule,
+    DividerModule,
+    TooltipModule,
+    PasswordModule,
+    ScrollPanelModule,
+    DropdownModule,
+    ToggleButtonModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

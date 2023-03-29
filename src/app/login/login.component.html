@@ -1,1 +1,23 @@
-<p>login works!</p>
+<form [formGroup]="loginForm" (ngSubmit)="login()">
+  <div class="flex flex-column">
+    <div class="flex justify-content-center">
+      <span class="p-float-label mt-2">
+        <input id="emailLogin" class="w-20rem" pInputText type="email" formControlName="email"/>
+        <label htmlFor="emailLogin">{{ 'form.email'|translate }}</label>
+        <small class="p-error block" *ngIf="loginForm.get('password')?.invalid && loginForm.get('password')?.dirty">FFF</small>
+      </span>
+    </div>
+    <br>
+    <div class="flex justify-content-center">
+      <span class="p-float-label mt-2">
+        <p-password id="password" class="pass" styleClass="pass" [feedback]="false" [toggleMask]="true" pInputText formControlName="password"></p-password>
+        <label for="password">{{ 'form.password'|translate }}</label>
+        <small class="p-error block" *ngIf="loginForm.get('password')?.invalid && loginForm.get('password')?.dirty">FFF</small>
+      </span>
+    </div>
+    <br>
+    <div class="flex justify-content-center">
+      <p-button [label]="'sidebar.signIn'|translate" type="submit" [disabled]="loginForm.invalid" styleClass="p-button-raised p-button-success"></p-button>
+    </div>
+  </div>
+</form>

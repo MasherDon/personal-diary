@@ -18,21 +18,22 @@ export class StartTranslateService {
     "mainMenu.search",
   ];
   languages: string[] = ['ru', 'en'];
-  instLanguages!: string;
 
   getLanguage() {
-    return this.instLanguages;
+    return localStorage.getItem('lang');
   }
 
   async setTranslate(lang: string) {
     this.translationArray = [];
-    this.instLanguages = lang;
+    localStorage.removeItem('lang');
+    localStorage.setItem('lang', lang);
     await this.translateService.use(lang).subscribe(() => {
       for (let n = 0; n < this.arrayForTranslation.length; n++) {
         this.translationArray.push(this.translateService.instant(this.arrayForTranslation[n]))
       }
       this.setString();
-    })
+    });
+    this.translatePrime();
   }
 
   getMenuTranslate() {
@@ -71,9 +72,11 @@ export class StartTranslateService {
 
   startTranslate() {
     this.translateService.addLangs(this.languages);
-    const browserLang = this.translateService.getBrowserLang()||'';
-    const lang = browserLang.match(/en/)? browserLang : 'ru';
+    let lang = this.getLanguage();
+    if (!lang) {
+      const browserLang = this.translateService.getBrowserLang() || '';
+      lang = browserLang.match(/en/) ? browserLang : 'ru';
+    }
     this.setTranslate(lang).then();
-    this.translatePrime();
   }
 }

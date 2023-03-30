@@ -1,5 +1,7 @@
 <div class="p-card m-3">
-  sssss
+  <div class="field col-12 md:col-4">
+    <p-calendar [(ngModel)]="date" [showButtonBar]="true" selectionMode="range" [showIcon]="true"></p-calendar>
+  </div>
 </div>
 <div class="p-card m-3">
   <p-editor [(ngModel)]="text" [style]="{'height':'320px'}">

@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import {Component, EventEmitter, Output} from '@angular/core';
 import { FormBuilder, Validators } from "@angular/forms";
 import { AuthService } from "../service/auth.service";
 
@@ -11,12 +11,16 @@ import { AuthService } from "../service/auth.service";
 export class LoginComponent {
   constructor(private formBuilder: FormBuilder, public authService: AuthService) {}
 
+  @Output() clickRestore = new EventEmitter();
+
   loginForm = this.formBuilder.group({
-    userName: ['', Validators.required],
     email: ['', Validators.email],
-    password: ['', Validators.required],
-    repeatPassword: ['', Validators.required]
+    password: ['', Validators.required]
   });
+
+  restore() {
+    this.clickRestore.emit();
+  }
 
   login() {
 

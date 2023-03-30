@@ -26,16 +26,19 @@ import { SkeletonModule } from 'primeng/skeleton';
 import { EditorModule } from 'primeng/editor';
 import { SidebarModule } from 'primeng/sidebar';
 import { RippleModule } from "primeng/ripple";
+
 import { TabViewModule } from 'primeng/tabview';
+
 import { AccordionModule } from 'primeng/accordion';
 import { InputTextModule } from 'primeng/inputtext';
 import { KeyFilterModule } from 'primeng/keyfilter';
 import { DividerModule } from 'primeng/divider';
-import { TooltipModule } from 'primeng/tooltip';
+//import { TooltipModule } from 'primeng/tooltip';
 import { PasswordModule } from 'primeng/password';
 import { ScrollPanelModule } from 'primeng/scrollpanel';
 import { DropdownModule } from 'primeng/dropdown';
 import { ToggleButtonModule } from 'primeng/togglebutton';
+//import { TabMenuModule } from 'primeng/tabmenu';
 
 import { AppComponent } from './app.component';
 import { CapComponent } from './cap/cap.component';
@@ -51,6 +54,7 @@ import { ToastComponent } from './toast/toast.component';
 import { SidebarComponent } from './sidebar/sidebar.component';
 import { OptionsComponent } from './options/options.component';
 import { ChangeUserDataComponent } from './change-user-data/change-user-data.component';
+import { RestoreComponent } from './restore/restore.component';
 
 const routes: Routes = [
   { path: '', component: RecordsComponent },
@@ -88,6 +92,7 @@ export function appInitializerFactory(translate: TranslateService) {
     SidebarComponent,
     OptionsComponent,
     ChangeUserDataComponent,
+    RestoreComponent,
   ],
   imports: [
     BrowserModule,
@@ -123,11 +128,12 @@ export function appInitializerFactory(translate: TranslateService) {
     InputTextModule,
     KeyFilterModule,
     DividerModule,
-    TooltipModule,
+    //TooltipModule,
     PasswordModule,
     ScrollPanelModule,
     DropdownModule,
     ToggleButtonModule,
+    //TabMenuModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

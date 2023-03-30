@@ -1,1 +1,9 @@
-<p>options works!</p>
+<div class="flex justify-content-center">
+  <p-dropdown styleClass="w-18rem" [options]="langArray" [(ngModel)]="lang"
+              (onChange)="setLanguage(lang)" optionLabel="lang"></p-dropdown>
+</div>
+<br>
+<div class="flex justify-content-center">
+  <p-toggleButton [(ngModel)]="darkTheme" [onLabel]="'sidebar.lightTheme'|translate " [offLabel]="'sidebar.darkTheme'|translate"
+                  styleClass="w-15rem" onIcon="pi pi-sun" offIcon="pi pi-moon" (onChange)="changesThem()"></p-toggleButton>
+</div>

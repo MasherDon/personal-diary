@@ -62,7 +62,8 @@
     "userData": "User data",
     "language": "Language",
     "darkTheme": "Dark theme",
-    "defaultTheme": "Default theme"
+    "lightTheme": "Light theme",
+    "restore": "Restore"
   },
   "toast": {
     "notAuthorized": "No authorization!",

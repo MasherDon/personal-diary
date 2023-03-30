@@ -62,7 +62,8 @@
     "userData": "Данные пользователя",
     "language": "Язык",
     "darkTheme": "Темная тема",
-    "defaultTheme": "Стандартая тема"
+    "lightTheme": "Светлая тема",
+    "restore": "Востановить"
   },
   "toast": {
     "notAuthorized": "Нет авторизации!",

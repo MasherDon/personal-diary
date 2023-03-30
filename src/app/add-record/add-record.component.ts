@@ -8,4 +8,5 @@ import { Component } from '@angular/core';
 
 export class AddRecordComponent {
   text: string = '';
+  date: Date[] = [];
 }

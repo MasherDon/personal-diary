@@ -29,7 +29,16 @@
             "styles": [
               "node_modules/primeicons/primeicons.css",
               "node_modules/primeng/resources/primeng.css",
-              "node_modules/primeng/resources/themes/lara-light-blue/theme.css",
+              {
+                "input": "src/app/lara-light-blue.scss",
+                "inject": false,
+                "bundleName": "light-them"
+              },
+              {
+                "input": "src/app/lara-dark-blue.scss",
+                "inject": false,
+                "bundleName": "dark-them"
+              },
               "node_modules/primeng/resources/primeflex.css",
               "src/styles.css",
               "node_modules/quill/dist/quill.core.css",

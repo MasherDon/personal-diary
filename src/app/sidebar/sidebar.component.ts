@@ -2,8 +2,6 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { SidebarIs } from "../interface/sidebarIs";
 import { UserData } from "../interface/userData";
 import { AuthService } from "../service/auth.service";
-import {StartTranslateService} from "../service/startTranslate.service";
-import { Language } from "../interface/language";
 
 @Component({
   selector: 'app-sidebar',
@@ -12,7 +10,7 @@ import { Language } from "../interface/language";
 })
 
 export class SidebarComponent {
-  constructor(public authService: AuthService, public translateService: StartTranslateService) {}
+  constructor(public authService: AuthService) {}
 
   @Input() userDate!: UserData;
   @Input() onSidebar!: SidebarIs;
@@ -21,16 +19,17 @@ export class SidebarComponent {
 
   active: number = 0;
   sigIn!: boolean;
-  lang!: Language;
-  darkTheme: boolean = false;
+  restore: boolean = false;
 
-  langArray: Language[] = [
-    { lang: 'Русский', code: 'ru' },
-    { lang: 'English', code: 'en' },
-  ];
+  onRestore() {
+    this.restore = true;
+    setInterval(() => this.active = 2,100);
+  }
 
-  setLanguage(lang: Language) {
-    this.translateService.setTranslate(lang.code).then();
+  changes() {
+    if (this.active !== 2) {
+      this.restore = false;
+    }
   }
 
   ngOnChanges() {
@@ -38,9 +37,7 @@ export class SidebarComponent {
     this.active = this.sigOrReg;
   }
 
-  ngOnInit() {
-    const language = this.translateService.getLanguage()
-    this.langArray.map((langItem) =>
-    { if (langItem.code === language) this.lang = langItem; });
-  }
+  // ngOnInit() {
+  //
+  // }
 }

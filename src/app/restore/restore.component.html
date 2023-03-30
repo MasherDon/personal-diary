@@ -1,0 +1,15 @@
+<form [formGroup]="restoreForm" (ngSubmit)="restore()">
+  <div class="flex flex-column">
+    <div class="flex justify-content-center">
+      <span class="p-float-label mt-2">
+        <input id="emailRestore" class="w-20rem" pInputText type="email" formControlName="email"/>
+        <label htmlFor="emailRestore">{{ 'form.email'|translate }}</label>
+        <!--        <small class="p-error block" *ngIf="registerForm.get('password')?.invalid && registerForm.get('password')?.dirty">FFF</small>-->
+      </span>
+    </div>
+    <br>
+    <div class="flex justify-content-center">
+      <p-button [label]="'sidebar.restore'|translate" type="submit" [disabled]="restoreForm.invalid" styleClass="p-button-raised p-button-help"></p-button>
+    </div>
+  </div>
+</form>

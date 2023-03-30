@@ -8,7 +8,7 @@ import { Toast } from '../interface/toast'
 export class ToastService {
   constructor() { }
 
-  arrayToast!: any;
+  arrayToast!: Toast;
 
   generate() {
     this.arrayToast = {
@@ -17,7 +17,11 @@ export class ToastService {
   }
 
   setToast(item: string, value: boolean) {
-    this.arrayToast[item] = value;
+    switch(item) {
+      case ('notRegister'):
+        this.arrayToast.notRegister = value;
+        break;
+    }
   }
 
   getToast() {

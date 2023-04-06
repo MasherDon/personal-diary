@@ -1,30 +1,57 @@
 import { Injectable } from '@angular/core';
-import { Toast } from '../interface/toast'
+import { MessageService } from "primeng/api";
 
 @Injectable({
   providedIn: 'root'
 })
 
 export class ToastService {
-  constructor() { }
+  constructor(public messageService: MessageService) { }
 
-  arrayToast!: Toast;
+  arrayString!: string[];
 
-  generate() {
-    this.arrayToast = {
-      notRegister: true,
-    }
+  isDeleteUser!: boolean;
+
+  generateTranslate(stringTranslate: string[]) {
+    this.arrayString = stringTranslate;
   }
 
-  setToast(item: string, value: boolean) {
-    switch(item) {
-      case ('notRegister'):
-        this.arrayToast.notRegister = value;
-        break;
-    }
+  operationNotAllowed() {
+    this.massage('error', this.arrayString[0], this.arrayString[1]);
+  }
+  errorRegistration() {
+    this.massage('error', this.arrayString[0], this.arrayString[2]);
+  }
+  successRegistration() {
+    this.massage('success', this.arrayString[3], this.arrayString[4]);
+  }
+  sigInSuccess() {
+    this.massage('success', this.arrayString[3], this.arrayString[5]);
+  }
+  sigIngError() {
+    this.massage('error', this.arrayString[0], this.arrayString[6]);
+  }
+  restore() {
+    this.massage('success', this.arrayString[3], this.arrayString[7]);
+  }
+  notRestore() {
+    this.massage('error', this.arrayString[0], this.arrayString[8]);
   }
 
-  getToast() {
-    return this.arrayToast;
+  massage(severity: string, summary: string, detail: string) {
+    this.messageService.add({ key: 'massage', severity: severity, summary: summary, detail: detail, life: 10000 });
+  }
+
+  offVerified() {
+    this.messageService.add({ key: 'verified', severity: 'error', sticky: true });
+  }
+  offNotRegister() {
+    this.messageService.add( {key: 'notRegister', severity: 'warn', sticky: true});
+  }
+  onVerified() {
+    this.messageService.clear('verified');
+  }
+  onNotRegister() {
+    this.messageService.clear('notRegister');
   }
 }

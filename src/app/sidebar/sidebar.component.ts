@@ -18,26 +18,20 @@ export class SidebarComponent {
   @Output() closeWin = new EventEmitter();
 
   active: number = 0;
-  sigIn!: boolean;
-  restore: boolean = false;
 
   onRestore() {
-    this.restore = true;
-    setInterval(() => this.active = 2,100);
+    this.active = 2;
   }
 
-  changes() {
-    if (this.active !== 2) {
-      this.restore = false;
-    }
+  onInPut() {
+    this.active = 0;
+  }
+
+  exitSidebar() {
+    this.onSidebar.onWin = false;
   }
 
   ngOnChanges() {
-    this.sigIn = this.authService.getSigIn();
     this.active = this.sigOrReg;
   }
-
-  // ngOnInit() {
-  //
-  // }
 }

@@ -17,32 +17,85 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
+            "allowedCommonJsDependencies": [
+              "quill"
+            ],
             "outputPath": "dist/personal-diary",
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": "src/polyfills.ts",
             "tsConfig": "tsconfig.app.json",
             "assets": [
-              "src/favicon.ico",
+              "src/diary.ico",
               "src/assets"
             ],
             "styles": [
               "node_modules/primeicons/primeicons.css",
               "node_modules/primeng/resources/primeng.css",
               {
-                "input": "src/app/lara-light-blue.scss",
+                "input": "src/saga-blue.scss",
                 "inject": false,
-                "bundleName": "light-them"
+                "bundleName": "light-them-blue"
               },
               {
-                "input": "src/app/lara-dark-blue.scss",
+                "input": "src/saga-green.scss",
                 "inject": false,
-                "bundleName": "dark-them"
+                "bundleName": "light-them-green"
+              },
+              {
+                "input": "src/saga-orange.scss",
+                "inject": false,
+                "bundleName": "light-them-orange"
+              },
+              {
+                "input": "src/saga-purple.scss",
+                "inject": false,
+                "bundleName": "light-them-purple"
+              },
+              {
+                "input": "src/arya-blue.scss",
+                "inject": false,
+                "bundleName": "dark-them-blue"
+              },
+              {
+                "input": "src/arya-green.scss",
+                "inject": false,
+                "bundleName": "dark-them-green"
+              },
+              {
+                "input": "src/arya-orange.scss",
+                "inject": false,
+                "bundleName": "dark-them-orange"
+              },
+              {
+                "input": "src/arya-purple.scss",
+                "inject": false,
+                "bundleName": "dark-them-purple"
+              },
+              {
+                "input": "src/vela-blue.scss",
+                "inject": false,
+                "bundleName": "alt-them-blue"
+              },
+              {
+                "input": "src/vela-green.scss",
+                "inject": false,
+                "bundleName": "alt-them-green"
+              },
+              {
+                "input": "src/vela-orange.scss",
+                "inject": false,
+                "bundleName": "alt-them-orange"
+              },
+              {
+                "input": "src/vela-purple.scss",
+                "inject": false,
+                "bundleName": "alt-them-purple"
               },
               "node_modules/primeng/resources/primeflex.css",
-              "src/styles.css",
               "node_modules/quill/dist/quill.core.css",
-              "node_modules/quill/dist/quill.snow.css"
+              "node_modules/quill/dist/quill.snow.css",
+              "src/styles.css"
             ],
             "scripts": [
               "node_modules/quill/dist/quill.js"

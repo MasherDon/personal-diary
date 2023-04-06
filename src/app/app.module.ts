@@ -4,13 +4,18 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterModule, Routes } from '@angular/router'
 import { ReactiveFormsModule } from '@angular/forms';
 
-//import { initializeApp, provideFirebaseApp } from '@angular/fire/app';
-import { environment } from '../environments/environment';
-//import { provideAuth, getAuth } from '@angular/fire/auth';
-//import { provideFirestore, getFirestore } from '@angular/fire/firestore';
-import { AngularFireModule } from "@angular/fire/compat";
+// import { initializeApp,provideFirebaseApp } from '@angular/fire/app';
+// import { environment } from '../environments/environment';
+// import { provideAuth,getAuth } from '@angular/fire/auth';
+// import { provideFirestore,getFirestore } from '@angular/fire/firestore';
 
-import {TranslateModule, TranslateLoader, TranslateService} from '@ngx-translate/core';
+import { environment } from '../environments/environment';
+import { AngularFireModule } from "@angular/fire/compat";
+import { AngularFirestoreModule } from "@angular/fire/compat/firestore";
+
+import { ConfirmationService, MessageService } from "primeng/api";
+
+import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { HttpClientModule, HttpClient } from '@angular/common/http';
 
@@ -22,23 +27,27 @@ import { AvatarModule } from 'primeng/avatar';
 import { CalendarModule } from 'primeng/calendar';
 import { ToastModule } from "primeng/toast";
 import { VirtualScrollerModule } from 'primeng/virtualscroller';
-import { SkeletonModule } from 'primeng/skeleton';
 import { EditorModule } from 'primeng/editor';
 import { SidebarModule } from 'primeng/sidebar';
 import { RippleModule } from "primeng/ripple";
-
 import { TabViewModule } from 'primeng/tabview';
-
 import { AccordionModule } from 'primeng/accordion';
 import { InputTextModule } from 'primeng/inputtext';
 import { KeyFilterModule } from 'primeng/keyfilter';
 import { DividerModule } from 'primeng/divider';
-//import { TooltipModule } from 'primeng/tooltip';
 import { PasswordModule } from 'primeng/password';
 import { ScrollPanelModule } from 'primeng/scrollpanel';
 import { DropdownModule } from 'primeng/dropdown';
 import { ToggleButtonModule } from 'primeng/togglebutton';
-//import { TabMenuModule } from 'primeng/tabmenu';
+import { AutoFocusModule } from 'primeng/autofocus';
+import { FieldsetModule } from 'primeng/fieldset';
+import { CheckboxModule } from 'primeng/checkbox';
+import { RadioButtonModule } from 'primeng/radiobutton';
+import { ConfirmDialogModule } from 'primeng/confirmdialog';
+
+import { InplaceModule } from 'primeng/inplace';
+import { SkeletonModule } from 'primeng/skeleton';
+import { TooltipModule } from 'primeng/tooltip';
 
 import { AppComponent } from './app.component';
 import { CapComponent } from './cap/cap.component';
@@ -53,8 +62,8 @@ import { SearchComponent } from './search/search.component';
 import { ToastComponent } from './toast/toast.component';
 import { SidebarComponent } from './sidebar/sidebar.component';
 import { OptionsComponent } from './options/options.component';
-import { ChangeUserDataComponent } from './change-user-data/change-user-data.component';
 import { RestoreComponent } from './restore/restore.component';
+import { EditDataComponent } from './edit-data/edit-data.component';
 
 const routes: Routes = [
   { path: '', component: RecordsComponent },
@@ -67,13 +76,6 @@ const routes: Routes = [
 
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http);
-}
-
-export function appInitializerFactory(translate: TranslateService) {
-  return () => {
-    translate.setDefaultLang('ru');
-    return translate.use('ru').toPromise();
-  };
 }
 
 @NgModule({
@@ -91,17 +93,18 @@ export function appInitializerFactory(translate: TranslateService) {
     ToastComponent,
     SidebarComponent,
     OptionsComponent,
-    ChangeUserDataComponent,
     RestoreComponent,
+    EditDataComponent,
   ],
   imports: [
     BrowserModule,
     ReactiveFormsModule,
     RouterModule.forRoot(routes),
-    AngularFireModule.initializeApp(environment.firebase),
     // provideFirebaseApp(() => initializeApp(environment.firebase)),
     // provideAuth(() => getAuth()),
     // provideFirestore(() => getFirestore()),
+    AngularFireModule.initializeApp(environment.firebase),
+    AngularFirestoreModule,
     TranslateModule.forRoot({
       loader: {
         provide: TranslateLoader,
@@ -119,7 +122,7 @@ export function appInitializerFactory(translate: TranslateService) {
     CalendarModule,
     ToastModule,
     VirtualScrollerModule,
-    SkeletonModule,
+    //SkeletonModule,
     EditorModule,
     SidebarModule,
     RippleModule,
@@ -133,10 +136,15 @@ export function appInitializerFactory(translate: TranslateService) {
     ScrollPanelModule,
     DropdownModule,
     ToggleButtonModule,
-    //TabMenuModule,
+    AutoFocusModule,
+    FieldsetModule,
+    CheckboxModule,
+    RadioButtonModule,
+    //InplaceModule,
+    ConfirmDialogModule,
   ],
-  providers: [],
-  bootstrap: [AppComponent]
+  providers: [ MessageService, ConfirmationService ],
+  bootstrap: [ AppComponent ]
 })
 
 export class AppModule {}

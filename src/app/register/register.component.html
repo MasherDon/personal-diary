@@ -1,39 +1,30 @@
 <form [formGroup]="registerForm" (ngSubmit)="register()">
-  <div class="flex flex-column">
-    <div class="flex justify-content-center">
-      <span class="p-float-label mt-2">
-        <input id="username" [pKeyFilter]="block" class="w-20rem" pInputText type="text" formControlName="userName"/>
-        <label htmlFor="username">{{ 'form.nickname'|translate }}</label>
-<!--        <small class="p-error block" *ngIf="registerForm.get('password')?.invalid && registerForm.get('password')?.dirty">FFF</small>-->
+  <br>
+  <div class="flex flex-column justify-content-center align-items-center gap-5">
+    <span class="p-float-label">
+      <input pAutoFocus [autofocus]="true" id="username" [pKeyFilter]="name" class="w-20rem" pInputText type="text" formControlName="userName"/>
+      <label htmlFor="username">{{ 'form.nickname'|translate }}</label>
+      <small class="p-error block" *ngIf="registerForm.get('userName')?.invalid && registerForm.get('userName')?.dirty">
+            {{ 'error.wrongLength'|translate }}
+      </small>
+    </span>
+    <span class="p-float-label">
+      <input id="emailRegister" class="w-20rem" pInputText type="email" formControlName="email"/>
+      <label htmlFor="emailRegister">{{ 'form.email'|translate }}</label>
+      <small class="p-error block" *ngIf="invalidEmail">{{ invalidEmail==1?('error.emailUse'|translate):('error.emailInvalid'|translate) }}</small>
+    </span>
+    <span class="p-float-label">
+      <p-password id="password" class="pass" [ngClass]="{'ng-invalid ng-dirty': strongPass()}" [toggleMask]="true" formControlName="password"></p-password>
+      <label for="password">{{ 'form.password'|translate }}</label>
+      <small class="p-error block" *ngIf="invalidPass">{{ 'error.passWeak'|translate }}</small>
       </span>
-    </div>
-    <br>
-    <div class="flex justify-content-center">
-      <span class="p-float-label mt-2">
-        <input id="emailRegister" class="w-20rem" pInputText type="email" formControlName="email"/>
-        <label htmlFor="emailRegister">{{ 'form.email'|translate }}</label>
-<!--        <small class="p-error block" *ngIf="registerForm.get('password')?.invalid && registerForm.get('password')?.dirty">FFF</small>-->
-      </span>
-    </div>
-    <p-divider type="solid" class="m-2"></p-divider>
-    <div class="flex justify-content-center mt-1">
-      <span class="p-float-label">
-        <p-password id="password" class="pass" styleClass="pass" [toggleMask]="true" pInputText formControlName="password"></p-password>
-        <label for="password">{{ 'form.password'|translate }}</label>
-<!--        <small class="p-error block" *ngIf="registerForm.get('password')?.invalid && registerForm.get('password')?.dirty">FFF</small>-->
-      </span>
-    </div>
-    <br>
-    <div class="flex justify-content-center mt-2">
-      <span class="p-float-label">
-        <p-password id="repeatPassword" class="pass" styleClass="pass" [feedback]="false" pInputText formControlName="repeatPassword"></p-password>
-        <label for="repeatPassword">{{ 'form.repetPassword'|translate }}</label>
-<!--        <small class="p-error block" *ngIf="loginForm.value.password !== loginForm.value.repeatPassword">KKK</small>-->
-      </span>
-    </div>
-    <br>
-    <div class="flex justify-content-center">
-      <p-button [label]="'sidebar.registration'|translate" type="submit" [disabled]="registerForm.invalid" styleClass="p-button-warning p-button-success"></p-button>
-    </div>
+    <span class="p-float-label">
+      <p-password id="repeatPassword" class="pass" [ngClass]="{'ng-invalid ng-dirty': validRepeatPassword()}" [feedback]="false" formControlName="repeatPassword"></p-password>
+      <label for="repeatPassword">{{ 'form.repetPassword'|translate }}</label>
+      <small class="p-error block" *ngIf="validRepeatPassword()">{{ 'error.repeatInvalid'|translate }}</small>
+    </span>
   </div>
+  <p-divider type="solid" align="center">
+    <p-button [label]="'sidebar.registration'|translate" type="submit" [disabled]="!validForm()" styleClass="p-button-raised p-button-warning"></p-button>
+  </p-divider>
 </form>

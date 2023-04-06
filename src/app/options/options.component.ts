@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
-import {Language} from "../interface/language";
-import {StartTranslateService} from "../service/startTranslate.service";
-import {ThemeService} from "../service/theme.service";
+import { StartTranslateService } from "../service/startTranslate.service";
+import { ThemeService } from "../service/theme.service";
+import { Color } from "../interface/color";
 
 @Component({
   selector: 'app-options',
@@ -10,28 +10,41 @@ import {ThemeService} from "../service/theme.service";
 })
 
 export class OptionsComponent {
-  constructor(private translateService: StartTranslateService, private themeService: ThemeService) {}
+  constructor(public themeService: ThemeService, public startTranslateService: StartTranslateService) {}
 
-  lang!: Language;
-  darkTheme!: boolean;
+  book: boolean = true;
+  pag: boolean = false;
+  animationRecord: boolean = true;
+  bookEditRecord: boolean = true;
 
-  langArray: Language[] = [
-    { lang: 'Русский', code: 'ru' },
-    { lang: 'English', code: 'en' },
-  ];
+  altDark!: boolean;
 
-  setLanguage(lang: Language) {
-    this.translateService.setTranslate(lang.code).then();
-  }
-
-  changesThem() {
-    this.themeService.setTheme(this.darkTheme);
-  }
+  lightThemColor!: Color;
+  darkThemColor!: Color;
+  colorArray!: Color[];
+  darkThem!: boolean;
 
   ngOnInit() {
-    this.darkTheme = this.themeService.getTheme();
-    const language = this.translateService.getLanguage();
-    this.langArray.map((langItem) =>
-    { if (langItem.code === language) this.lang = langItem; });
+    this.darkThem = this.themeService.getThemeBool();
+    this.colorArray = this.startTranslateService.getColorThem();
+    const lightColor = this.themeService.getLightColor();
+    const darkColor = this.themeService.getDarkColor();
+    this.colorArray.map((colorItem) =>
+    { if (colorItem.code === lightColor) this.lightThemColor = colorItem; });
+    this.colorArray.map((colorItem) =>
+    { if (colorItem.code === darkColor) this.darkThemColor = colorItem; });
+    this.altDark = this.themeService.getAltDarkBool();
+  }
+
+  lightThemColorChange(color: Color) {
+    this.themeService.setLightColor(color.code);
+  }
+
+  darkThemColorChange(color: Color) {
+    this.themeService.setDarkColor(color.code);
+  }
+
+  altDarkThem() {
+    this.themeService.setAltDark(this.altDark);
   }
 }

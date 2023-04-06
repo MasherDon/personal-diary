@@ -1,8 +1,7 @@
 import { Component } from '@angular/core';
 import { StartTranslateService } from "./service/startTranslate.service";
-import { ToastService } from "./service/toast.service";
-import {AuthService} from "./service/auth.service";
-import {ThemeService} from "./service/theme.service";
+import { AuthService } from "./service/auth.service";
+import { ThemeService } from "./service/theme.service";
 
 @Component({
   selector: 'app-root',
@@ -11,14 +10,19 @@ import {ThemeService} from "./service/theme.service";
 })
 
 export class AppComponent {
-  constructor(public startTranslate: StartTranslateService, public toastService: ToastService,
-              public authService: AuthService, public themeService: ThemeService) {}
+  constructor(public startTranslate: StartTranslateService, private authService: AuthService, private themeService: ThemeService) {
+
+    this.authService.generate();
+    this.startTranslate.startTranslate();
+    this.themeService.generate();
+    this.authService.startAuth();
+  }
 
   ngOnInit() {
-    this.startTranslate.startTranslate();
-    this.toastService.generate();
-    this.authService.startAuth();
-    this.themeService.generate();
+    // this.authService.startAuth();
+    // this.startTranslate.startTranslate().then();
+    // this.themeService.generate();
+    // //this.authService.generate();
   }
 }
 

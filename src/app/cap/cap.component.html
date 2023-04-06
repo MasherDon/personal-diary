@@ -1,11 +1,19 @@
 <p-menubar [model]="startTranslateService.getMenuTranslate()" [autoDisplay]="true" [autoHide]="true">
   <ng-template pTemplate="start">
-    <img src="https://im.wampi.ru/2023/03/19/pngwing.com.png" height="45" class="mr-1" alt="diary">
+    <div class="flex">
+      <img src="assets/images/diary.png" height="45" alt="diary" [style]="{filter: themeService.getThemeBool()?'invert(100%)':'invert(0%)'}">
+    </div>
   </ng-template>
   <ng-template pTemplate="end">
-    <p-avatar [image]="authService.gatImage()" (click)="onSidebar.onWin = true" styleClass="mr-1" size="large" shape="circle"></p-avatar>
+    <div class="flex flex-row justify-content-center align-items-center gap-3">
+      <p-toggleButton styleClass="p-button-rounded p-button-outlined" [(ngModel)]="darkTheme" onIcon="pi pi-sun"
+                      offIcon="pi pi-moon" (onChange)="changesThem()"></p-toggleButton>
+      <p-dropdown [options]="langArray" styleClass="w-8rem p-inputtext-sm" [(ngModel)]="lang" (onChange)="setLanguage(lang)"
+                    optionLabel="lang"></p-dropdown>
+      <p-avatar [image]="authService.gatImage()" [style]="{cursor: 'pointer'}" (click)="onSidebar.onWin = true"
+                size="large" shape="circle"></p-avatar>
+    </div>
   </ng-template>
 </p-menubar>
-<app-toast [dataToast]="toastService.getToast()" [onSidebar]="onSidebar" (clickButton)="changeSigOrReg($event)"></app-toast>
-<app-sidebar [userDate]="authService.getUserDate()" [sigOrReg]="onSidebar.sigOrReg" [onSidebar]="onSidebar" (closeWin)="this.onSidebar.onWin = false;"></app-sidebar>
-
+<app-toast (clickButton)="changeSigOrReg($event)"></app-toast>
+<app-sidebar [userDate]="authService.getUserDate()" [sigOrReg]="onSidebar.sigOrReg" [onSidebar]="onSidebar" (closeWin)="this.onSidebar.onWin = false"></app-sidebar>

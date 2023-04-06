@@ -1,0 +1,60 @@
+<!--<p-scrollPanel [style]="{width: '200px', height: '100%' }">-->
+<!--</p-scrollPanel>-->
+<div class="flex flex-column align-items-center justify-content-center gap-3">
+  <p-dropdown [options]="labelArray" styleClass="w-18rem p-inputtext-sm" [(ngModel)]="label" optionLabel="label" (onChange)="cleanForm()"></p-dropdown>
+  <form class="flex flex-column align-items-center gap-3" [formGroup]="userNameForm" (ngSubmit)="setUserName()" *ngIf="label.code === 1">
+    <div>
+      <input [placeholder]="'form.nickname'|translate" [pKeyFilter]="name" class="w-18rem" pInputText type="text" formControlName="userName"/>
+      <small class="p-error block" *ngIf="userNameForm.get('userName')?.invalid && userNameForm.get('userName')?.dirty">
+        {{ 'error.wrongLength'|translate }}
+      </small>
+    </div>
+    <p-button [label]="'form.update'|translate" type="submit" [disabled]="userNameForm.invalid" styleClass="p-button-raised p-button-info"></p-button>
+  </form>
+  <form class="flex flex-column align-items-center gap-3" [formGroup]="photoURLForm" (ngSubmit)="setPhotoURL()" *ngIf="label.code === 2">
+      <input [placeholder]="'form.photoURL'|translate" class="w-18rem" pInputText type="text" formControlName="photoURL"/>
+      <p-button [label]="'form.update'|translate" type="submit" [disabled]="photoURLForm.invalid" styleClass="p-button-raised p-button-info"></p-button>
+  </form>
+  <div class="flex flex-column align-items-center gap-3" *ngIf="label.code === 3">
+    <p-dropdown [options]="langArray" styleClass="w-18rem p-inputtext-sm" [(ngModel)]="lang" optionLabel="lang"></p-dropdown>
+    <p-button [label]="'form.update'|translate" styleClass="p-button-raised p-button-info"></p-button>
+  </div>
+  <form class="flex flex-column align-items-center gap-3" [formGroup]="passwordForm" (ngSubmit)="setPassword()" *ngIf="label.code === 4">
+      <div>
+        <p-password class="pass" styleClass="w-18rem" [ngClass]="{'ng-invalid ng-dirty':errorPassword}" [feedback]="false" [toggleMask]="true" pInputText
+                    formControlName="password" [placeholder]="'form.password'|translate"></p-password>
+        <small class="p-error block" *ngIf="errorPassword">{{ 'error.passwordInvalid'|translate }}</small>
+      </div>
+      <div>
+        <p-password styleClass="w-18rem" [ngClass]="{'ng-invalid ng-dirty': strongPass()}" [toggleMask]="true" formControlName="newPassword"
+                    [placeholder]="'form.newPassword'|translate"></p-password>
+        <small class="p-error block" *ngIf="invalidPass">{{ 'error.passWeak'|translate }}</small>
+      </div>
+      <div>
+        <p-password styleClass="w-18rem" [ngClass]="{'ng-invalid ng-dirty': validRepeatPassword()}" [feedback]="false" formControlName="repeatNewPassword"
+                    [placeholder]="'form.repetPassword'|translate"></p-password>
+        <small class="p-error block" *ngIf="validRepeatPassword()">{{ 'error.repeatInvalid'|translate }}</small>
+      </div>
+      <p-button [label]="'form.update'|translate" type="submit" [disabled]="validForm()" styleClass="p-button-raised p-button-warning"></p-button>
+  </form>
+  <form class="flex flex-column align-items-center gap-3" [formGroup]="emailForm" (ngSubmit)="setEmail()" *ngIf="label.code === 5">
+      <div>
+        <p-password class="pass" styleClass="w-18rem" [ngClass]="{'ng-invalid ng-dirty':errorPassword}" [feedback]="false" [toggleMask]="true" pInputText
+                    formControlName="password" [placeholder]="'form.password'|translate"></p-password>
+        <small class="p-error block" *ngIf="errorPassword">{{ 'error.passwordInvalid'|translate }}</small>
+      </div>
+      <div>
+        <input class="w-18rem" pInputText type="email" formControlName="email" [placeholder]="'form.email'|translate"/>
+        <small class="p-error block" *ngIf="invalidEmail">{{ invalidEmail==1?('error.emailUse'|translate):('error.emailInvalid'|translate) }}</small>
+      </div>
+      <p-button [label]="'form.update'|translate" type="submit" [disabled]="emailForm.invalid" styleClass="p-button-raised p-button-warning"></p-button>
+  </form>
+  <form class="flex flex-column align-items-center gap-3" [formGroup]="deleteForm" (ngSubmit)="delete()" *ngIf="label.code === 6">
+      <div>
+        <p-password class="pass" styleClass="w-18rem" [ngClass]="{'ng-invalid ng-dirty':errorPassword}" [feedback]="false" [toggleMask]="true" pInputText
+                    formControlName="password" [placeholder]="'form.password'|translate"></p-password>
+        <small class="p-error block" *ngIf="errorPassword">{{ 'error.passwordInvalid'|translate }}</small>
+      </div>
+      <p-button [label]="'form.deleteQuestion'|translate" type="submit" [disabled]="deleteForm.invalid" styleClass="p-button-raised p-button-danger"></p-button>
+  </form>
+</div>

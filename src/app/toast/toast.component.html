@@ -1,19 +1,40 @@
-<p-toast position="bottom-left" key="notRegister" (onClose)="this.onNotRegister()" [showTransformOptions]="'translateY(100%)'">
+<p-toast position="bottom-left" key="notRegister" (onClose)="this.toastService.onNotRegister()" [showTransformOptions]="'translateY(100%)'">
   <ng-template pTemplate="message">
-    <div class="p-flex p-flex-column" style="flex: 1">
-      <div class="p-text-center">
+    <div class="flex flex-column gap-3" style="flex: 1">
+      <div class="flex gap-3">
         <i class="pi pi-question-circle" style="font-size: 3rem"></i>
-        <h4>{{ 'toast.notAuthorized'|translate }}</h4>
-        <p>{{ 'toast.notSave'|translate }}</p>
+        <div class="flex flex-column gap-3">
+          <h4 style="margin: 0">{{ 'massage.notAuthorized'|translate }}</h4>
+          <p style="margin: 0">{{ 'massage.notSave'|translate }}</p>
+        </div>
       </div>
-      <div class="p-grid p-fluid">
-        <div class="p-col-6 m-1">
-          <button type="button" (click)="sig()" pButton [label] = "'sidebar.signIn'|translate" class="p-button-success"></button>
-        </div>
-        <div class="p-col-6 m-1">
-          <button type="button" (click)="reg()" pButton [label] = "'sidebar.registration'|translate" class="p-button-warning"></button>
-        </div>
+      <div class="flex gap-1">
+        <button type="button" style="min-width: 10rem" (click)="sigOrReg(0)" pButton [label] = "'sidebar.signIn'|translate" class="p-button-raised p-button-success"></button>
+        <button type="button" style="min-width: 10rem" (click)="sigOrReg(1)" pButton [label] = "'sidebar.registration'|translate" class="p-button-raised p-button-warning"></button>
       </div>
     </div>
   </ng-template>
 </p-toast>
+
+<p-toast position="top-left" key="massage"></p-toast>
+
+<p-toast position="bottom-left" key="verified" (onClose)="this.toastService.onVerified()" [showTransformOptions]="'translateY(100%)'">
+  <ng-template pTemplate="message">
+    <div class="flex gap-3" style="flex: 1">
+        <i class="pi pi-verified" style="font-size: 3rem"></i>
+        <div class="flex flex-column gap-3">
+          <h4 style="margin: 0">{{ 'massage.verified'|translate }}</h4>
+          <p style="margin: 0">{{ 'massage.notVerified'|translate }}</p>
+        </div>
+    </div>
+  </ng-template>
+</p-toast>
+
+<p-confirmDialog #cd [style]="{'min-width': '30vw', 'max-width': '50vw'}">
+  <ng-template pTemplate="header">
+  </ng-template>
+  <ng-template pTemplate="footer">
+    <p-button styleClass="p-button-raised p-button-success" icon="pi pi-user" [label]="'primeng.reject'|translate" (click)="cd.reject()"></p-button>
+    <p-button styleClass="p-button-raised p-button-danger" icon="pi pi-trash" [label]="'primeng.accept'|translate" (click)="cd.accept()"></p-button>
+  </ng-template>
+</p-confirmDialog>

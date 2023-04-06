@@ -1,9 +1,41 @@
-<div class="flex justify-content-center">
-  <p-dropdown styleClass="w-18rem" [options]="langArray" [(ngModel)]="lang"
-              (onChange)="setLanguage(lang)" optionLabel="lang"></p-dropdown>
-</div>
-<br>
-<div class="flex justify-content-center">
-  <p-toggleButton [(ngModel)]="darkTheme" [onLabel]="'sidebar.lightTheme'|translate " [offLabel]="'sidebar.darkTheme'|translate"
-                  styleClass="w-15rem" onIcon="pi pi-sun" offIcon="pi pi-moon" (onChange)="changesThem()"></p-toggleButton>
+<div class="flex flex-column">
+  <div class="flex justify-content-center gap-5">
+    <div class="flex flex-column gap-2">
+      <div class="flex justify-content-center">
+        <h4 style="margin: 0">{{'options.lightTheme'|translate}}</h4>
+      </div>
+      <p-dropdown [options]="colorArray" styleClass="w-8rem" [(ngModel)]="lightThemColor" (onChange)="lightThemColorChange(lightThemColor)"
+                  optionLabel="color"></p-dropdown>
+    </div>
+    <div class="flex flex-column gap-2">
+      <div class="flex justify-content-center">
+        <h4 style="margin: 0">{{'options.darkTheme'|translate}}</h4>
+      </div>
+      <p-dropdown [options]="colorArray" styleClass="w-8rem" [(ngModel)]="darkThemColor" (onChange)="darkThemColorChange(darkThemColor)"
+                  optionLabel="color"></p-dropdown>
+    </div>
+  </div>
+  <p-divider type="solid" align="center"><label class="pi pi-palette ml-2 mr-2" style="font-size: 1.5rem"></label></p-divider>
+  <div class="flex justify-content-center gap-4">
+    <div class="flex align-items-center gap-2" [pTooltip]="'options.adt'|translate" tooltipPosition="top">
+      <p-checkbox [binary]="true" [(ngModel)]="altDark" (onChange)="altDarkThem()"></p-checkbox>
+      <img src="assets/images/moon.svg" alt="altDark" [style]="{height: '2rem', filter: darkThem?'invert(100%)':'invert(0%)'}">
+    </div>
+    <div class="flex align-items-center gap-2" [pTooltip]="'options.hsbd'|translate" tooltipPosition="top">
+      <p-checkbox [binary]="true" [(ngModel)]="book"></p-checkbox>
+      <img src="assets/images/menu_book.svg" alt="book" [style]="{height: '2rem', filter: darkThem?'invert(100%)':'invert(0%)'}">
+    </div>
+    <div class="flex align-items-center gap-2">
+      <p-checkbox [disabled]="!book" [binary]="true" [(ngModel)]="pag"></p-checkbox>
+      <img src="assets/images/switch.svg" alt="pages" [style]="{height: '2rem', filter: darkThem?'invert(100%)':'invert(0%)'}">
+    </div>
+    <div class="flex align-items-center gap-2">
+      <p-checkbox [disabled]="!book" [binary]="true" [(ngModel)]="animationRecord"></p-checkbox>
+      <img src="assets/images/auto_stories.svg" alt="animation" [style]="{height: '2rem', filter: darkThem?'invert(100%)':'invert(0%)'}">
+    </div>
+    <div class="flex align-items-center gap-2">
+      <p-checkbox [disabled]="!book" [binary]="true" [(ngModel)]="bookEditRecord"></p-checkbox>
+      <img src="assets/images/book_edit.svg" alt="bookEdit" [style]="{height: '2rem', filter: darkThem?'invert(100%)':'invert(0%)'}">
+    </div>
+  </div>
 </div>

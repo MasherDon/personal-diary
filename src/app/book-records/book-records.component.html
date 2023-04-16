@@ -1,0 +1,29 @@
+<div class="flex justify-content-center align-items-center page-book" [style]="{height: height()}">
+  <div class="flip-book" id="book" style="max-height: 675.5px">
+    <div class="page page-cover page-cover-top" data-density="hard">
+      <div class="flex justify-content-center h-full">
+        <span class="pi heart mt-6" [ngClass]="{'pi-heart':!themeService.getThemeBool(),'pi-heart-fill':themeService.getThemeBool()}"></span>
+      </div>
+    </div>
+    <div class="page page-hard page-cover-top"></div>
+    <div *ngIf="htmlRecord.length">
+      <div *ngFor="let item of htmlRecord" class="page" [innerHTML]="item.html" [ngClass]="{left:leftOrRight(item.page),right:leftOrRight(item.page)}"></div>
+    </div>
+    <div *ngIf="notFound">
+      <div class="page left">
+        <div class="flex justify-content-center align-items-center freehand">
+          <div class="flex flex-column justify-content-center align-items-center gap-3">
+            <img src="assets/images/noun-book-and-pen.png" height="284" alt="diary" [style]="{filter: themeService.getThemeBool()?'invert(100%)':'invert(0%)'}">
+            <div class="font-hold text-900 text-center text-6xl">{{ 'notRecord'|translate }}</div>
+            <p-button [routerLink]="['/add']" [label]="'mainMenu.add'|translate" icon="pi pi-plus" class="p-button-raised" styleClass="w-8rem"></p-button>
+          </div>
+        </div>
+      </div>
+      <div class="page right"></div>
+    </div>
+    <div class="page page-hard page-cover-bottom"></div>
+    <div class="page page-cover page-cover-bottom" data-density="hard">
+      <div class="flex justify-content-center h-full"></div>
+    </div>
+  </div>
+</div>

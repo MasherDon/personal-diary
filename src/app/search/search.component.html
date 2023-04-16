@@ -1,7 +1,61 @@
-<div class="p-card flex-row m-2">
-  <p-calendar [(ngModel)]="date" [showButtonBar]="true" selectionMode="range" [showIcon]="true"></p-calendar>
+<div class="flex flex-column align-items-center gap-2 m-2" id="search" style="width: calc(100% - 15px)">
+  <div class="flex gap-2">
+    <span class="p-input-icon-left flex align-items-center">
+      <i class="pi pi-search"></i>
+      <input type="text" pInputText [(ngModel)]="title"/>
+    </span>
+    <p-calendar styleClass="w-15rem" [(ngModel)]="dateLang" [showButtonBar]="true" selectionMode="range" [showIcon]="true"></p-calendar>
+    <p-button (onClick)="start()"  [label]="'form.search'|translate" styleClass="p-button-outlined"></p-button>
+  </div>
+  <div class="flex p-fluid">
+    <p-autoComplete [(ngModel)]="selectedCountries" [suggestions]="filteredCountries" (completeMethod)="filterCountry($event)" field="tag"
+                    [multiple]="true" [placeholder]="'form.tags'|translate" styleClass="w-35rem"></p-autoComplete>
+  </div>
 </div>
-<div class="p-card flex-row m-2" style="height: 200px">
 
+<div *ngIf="records?.length">
+  <p-virtualScroller
+    [value]="virtualRecord"
+    [scrollHeight]="height()"
+    [itemSize]="204"
+    [lazy]="true"
+    (onLazyLoad)="loadCarsLazy($event)"
+    #Records>
+    <ng-template let-record pTemplate="item">
+      <div class="flex justify-content-center mt-4 mb-4" style="width: 100%">
+        <div class="p-card-hide flex order justify-content-between shadow" style="min-width: 600px; width: 50%; min-height: 180px; cursor: pointer"
+             (click)="click($event, record['syllable'])">
+          <div class="flex flex-column m-2" style="width: 100%" (click)="click($event, record['syllable'])">
+            <div class="flex align-items-center gap-3 ml-3" (click)="click($event, record['syllable'])">
+              <h1 style="margin: 0" (click)="title = record['title']">{{ record['title'] }}</h1>
+              <p-calendar (click)="setDate(record['date'])" styleClass="w-9rem" class="hide" [(ngModel)]="record['date']" [disabled]="true"></p-calendar>
+            </div>
+            <p-divider type="solid" (click)="click($event, record['syllable'])"></p-divider>
+            <div class="flex flex-wrap justify-content-start gap-3" style="max-width: 100%" (click)="click($event, record['syllable'])">
+              <p-chip *ngFor="let item of record['tag']" [label]="item['tag']" (click)="setTag(item['tag'])"></p-chip>
+            </div>
+          </div>
+          <div class="flex flex-column justify-content-center align-items-center m-3 gap-3" (click)="click($event, record['syllable'])">
+            <p-button icon="pi pi-pencil" (onClick)="edit(record['syllable'])" class="shadow" styleClass="p-button-text"></p-button>
+            <p-button icon="pi pi-trash" (onClick)="delete(record['syllable'])" class="shadow" styleClass="p-button-text"></p-button>
+          </div>
+        </div>
+      </div>
+    </ng-template>
+    <ng-template pTemplate="loadingItem">
+      <div class="flex justify-content-center mt-4 mb-4" style="width: 100%">
+        <p-skeleton height="180px" [width]="width()"></p-skeleton>
+      </div>
+    </ng-template>
+  </p-virtualScroller>
+  <div style="position: absolute; bottom: 30px; right: 50px">
+    <p-button (onClick)="reset()" icon="pi pi-arrow-up" styleClass="p-button-outlined"></p-button>
+  </div>
 </div>
 
+<div *ngIf="this.notFound" class="flex justify-content-center align-items-center" [style]="{'min-height': height()}">
+  <div class="flex p-card shadow-5 flex-column justify-content-center align-items-center gap-3 sm:p-8" style="min-width: 30rem">
+    <div class="font-hold text-900 text-center text-6xl freehand">{{ 'notSearch'|translate }}</div>
+    <p-button [routerLink]="['/']" [label]="'mainMenu.diary'|translate" icon="pi pi-home" class="p-button-raised" styleClass="w-10rem"></p-button>
+  </div>
+</div>

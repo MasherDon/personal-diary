@@ -5,21 +5,30 @@ import { Language } from "../interface/language";
 import { Color } from "../interface/color";
 import { EditData } from "../interface/editData";
 import { ToastService } from "./toast.service";
+import { AngularFireAuth } from "@angular/fire/compat/auth";
 
 @Injectable({
   providedIn: 'root'
  })
 
 export class StartTranslateService {
-  constructor(private config: PrimeNGConfig, private translateService: TranslateService, private toastService: ToastService) {}
+  constructor(private config: PrimeNGConfig, private translateService: TranslateService, private toastService: ToastService,
+              private fireAuth: AngularFireAuth) {}
 
   mainItems!: MenuItem[];
-  translationArray!: string[];
-  arrayForTranslation: string[] = [
+  colorItems!: Color[];
+  labelItems!: EditData[];
+
+  transMenuArray!: string[];
+  menuArray: string[] = [
     "mainMenu.diary",
     "mainMenu.recording",
     "mainMenu.add",
     "mainMenu.search",
+  ];
+
+  transMassageArray!: string[];
+  massageArray: string[] = [
     "massage.error",
     "massage.notAllowed",
     "massage.regError",
@@ -29,17 +38,58 @@ export class StartTranslateService {
     "massage.sigIngError",
     "massage.massEmail",
     "massage.notRestore",
-    "massage.deleteProfile",
+  ];
+
+  transColorArray!: string[];
+  colorArray: string[] = [
     "color.blue",
     "color.green",
     "color.orange",
     "color.purple",
+  ];
+
+  transFormArray!: string[];
+  formArray: string[] = [
     "form.nickname",
     "form.photoURL",
-    "form.language",
     "form.password",
     "form.email",
     "form.delete",
+  ];
+
+  transConfirmDialog!: string;
+  confirmDialog: string = "massage.deleteProfile";
+
+  transEditorArray!: string[];
+  editorArray: string[] = [
+    "editor.placeholder",
+    "editor.enterHeader",
+    "editor.clickTune",
+    "editor.orDragToMove",
+    "editor.convert",
+    "editor.add",
+    "editor.text",
+    "editor.heading",
+    "editor.list",
+    "editor.delimiter",
+    "editor.link",
+    "editor.marker",
+    "editor.bold",
+    "editor.italic",
+    "editor.title",
+    "editor.message",
+    "editor.addLink",
+    "editor.notDisplayed",
+    "editor.unordered",
+    "editor.ordered",
+    "editor.delete",
+    "editor.moveUp",
+    "editor.moveDown",
+  ];
+
+  transButtonArray!: string[];
+  buttonArray: string[] = [
+    "button.delete"
   ];
 
   massLanguages: Language[] = [
@@ -51,9 +101,6 @@ export class StartTranslateService {
 
   languages: string[] = ['ru', 'en'];
 
-  colorArray!: Color[];
-
-  labelArray!: EditData[];
 
   getLanguage() {
     return localStorage.getItem('lang')||'ru';
@@ -64,23 +111,58 @@ export class StartTranslateService {
   }
 
   async setTranslate(lang: string) {
-    this.translationArray = [];
-    localStorage.removeItem('lang');
-    localStorage.setItem('lang', lang);
+    this.transMenuArray = [];
+    this.transMassageArray = [];
+    this.transColorArray = [];
+    this.transFormArray = [];
+    this.transEditorArray = [];
+    this.transButtonArray = [];
+
     await this.translateService.use(lang).subscribe(() => {
-      for (let n = 0; n < this.arrayForTranslation.length; n++) {
-        this.translationArray.push(this.translateService.instant(this.arrayForTranslation[n]))
+      for (let n = 0; n < this.menuArray.length; n++) {
+        this.transMenuArray.push(this.translateService.instant(this.menuArray[n]))
       }
       this.setStringMenu();
+
+      for (let n = 0; n < this.massageArray.length; n++) {
+        this.transMassageArray.push(this.translateService.instant(this.massageArray[n]))
+      }
+      this.toastService.generateTranslate(this.transMassageArray);
+
+      for (let n = 0; n < this.colorArray.length; n++) {
+        this.transColorArray.push(this.translateService.instant(this.colorArray[n]))
+      }
       this.setStringColor();
+
+      for (let n = 0; n < this.formArray.length; n++) {
+        this.transFormArray.push(this.translateService.instant(this.formArray[n]))
+      }
       this.setStringLabel();
-      this.toastService.generateTranslate(this.translationArray.slice(4, 13));
+
+      this.transConfirmDialog = this.translateService.instant(this.confirmDialog);
+
+      for (let n = 0; n < this.editorArray.length; n++) {
+        this.transEditorArray.push(this.translateService.instant(this.editorArray[n]))
+      }
+
+      for (let n = 0; n < this.buttonArray.length; n++) {
+        this.transButtonArray.push(this.translateService.instant(this.buttonArray[n]))
+      }
+
+      this.translatePrime();
+      localStorage.removeItem('lang');
+      localStorage.setItem('lang', lang);
+      // @ts-ignore
+      this.fireAuth.languageCode = lang; //new Promise(() => lang);
     });
-    this.translatePrime();
+  }
+
+  getEditorTranslate() {
+    return this.transEditorArray;
   }
 
   confirmDialogTranslate() {
-    return this.translationArray[13];
+    return this.transConfirmDialog;
   }
 
   getMenuTranslate() {
@@ -88,35 +170,35 @@ export class StartTranslateService {
   }
 
   getColorThem() {
-    return this.colorArray;
+    return this.colorItems;
   }
 
   getLabel() {
-    return this.labelArray;
+    return this.labelItems;
   }
 
-  getMassDelete() {
-    return this.translationArray[23];
+  getButtonTranslate() {
+    return this.transButtonArray;
   }
 
   setStringMenu() {
     this.mainItems = [
       {
-        label: this.translationArray[0],
+        label: this.transMenuArray[0],
         icon:'pi pi-home',
         routerLink: ['/'],
       },
       {
-        label: this.translationArray[1],
+        label: this.transMenuArray[1],
         icon:'pi pi-fw pi-pencil',
         items:[
           {
-            label: this.translationArray[2],
+            label: this.transMenuArray[2],
             icon:'pi pi-plus',
             routerLink: ['/add'],
           },
           {
-            label: this.translationArray[3],
+            label: this.transMenuArray[3],
             icon: 'pi pi-search',
             routerLink: ['/search'],
           },
@@ -126,22 +208,21 @@ export class StartTranslateService {
   }
 
   setStringLabel() {
-    this.labelArray = [
-      { label: this.translationArray[18], code: 1 },
-      { label: this.translationArray[19], code: 2 },
-      { label: this.translationArray[20], code: 3 },
-      { label: this.translationArray[21], code: 4 },
-      { label: this.translationArray[22], code: 5 },
-      { label: this.translationArray[23], code: 6 },
+    this.labelItems = [
+      { label: this.transFormArray[0], code: 1 },
+      { label: this.transFormArray[1], code: 2 },
+      { label: this.transFormArray[2], code: 3 },
+      { label: this.transFormArray[3], code: 4 },
+      { label: this.transFormArray[4], code: 5 },
     ]
   }
 
   setStringColor() {
-    this.colorArray  = [
-      { color: this.translationArray[14], code: 'blue' },
-      { color: this.translationArray[14], code: 'green' },
-      { color: this.translationArray[16], code: 'orange' },
-      { color: this.translationArray[17], code: 'purple' },
+    this.colorItems  = [
+      { color: this.transColorArray[0], code: 'blue' },
+      { color: this.transColorArray[1], code: 'green' },
+      { color: this.transColorArray[2], code: 'orange' },
+      { color: this.transColorArray[3], code: 'purple' },
     ];
   }
 

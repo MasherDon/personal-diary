@@ -1,1 +1,7 @@
-
+.shadow {
+  transition: box-shadow 0.5s ease;
+}
+.shadow:hover {
+  box-shadow: 2px 4px 6px var(--primary-color) !important;
+  transition: box-shadow 0.5s ease;
+}

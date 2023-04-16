@@ -33,7 +33,7 @@ export class EditDataComponent {
   errorPassword: boolean = false;
 
   userNameForm = this.formBuilder.group({
-    userName: ['', [Validators.required, Validators.maxLength(12)]]
+    userName: ['', [Validators.required, Validators.maxLength(8)]]
   });
 
   photoURLForm = this.formBuilder.group({
@@ -88,25 +88,27 @@ export class EditDataComponent {
     password = password.trim();
     let newPassword = '' + this.passwordForm.value.newPassword;
     newPassword = newPassword.trim();
-    this.fireAuth.signInWithEmailAndPassword(this.userData.email||'', password).then((user) => {
-      if (user.user?.emailVerified) {
-        user.user.updatePassword(newPassword).then(user => {
-          this.authService.userUpdate();
-          this.passwordForm.reset();
-          this.cleanForm();
-        })
-      }
-    }).catch((error) => {
-      switch (error.code) {
-        case ('auth/email-already-in-use'): {
-          this.invalidEmail = 1;
+    this.fireAuth.setPersistence(this.authService.getPersistence()||'local').then(() => {
+      this.fireAuth.signInWithEmailAndPassword(this.userData.email || '', password).then((user) => {
+        if (user.user?.emailVerified) {
+          user.user.updatePassword(newPassword).then(user => {
+            this.authService.userUpdate();
+            this.passwordForm.reset();
+            this.cleanForm();
+          })
         }
-          break;
-        case ('auth/invalid-email'): {
-          this.invalidEmail = 2;
+      }).catch((error) => {
+        switch (error.code) {
+          case ('auth/email-already-in-use'): {
+            this.invalidEmail = 1;
+          }
+            break;
+          case ('auth/invalid-email'): {
+            this.invalidEmail = 2;
+          }
+            break;
         }
-          break;
-      }
+      });
     });
   }
 
@@ -115,22 +117,24 @@ export class EditDataComponent {
     password = password.trim();
     let email = '' + this.emailForm.value.email;
     email = email.trim();
-    this.fireAuth.signInWithEmailAndPassword(this.userData.email||'', password).then((user) => {
-      if (user.user?.emailVerified) {
-        this.authService.updateEmailBD(email).then();
-        user.user.updateEmail(email).then(user => {
-          this.emailForm.reset();
-          this.cleanForm();
-          this.authService.userUpdate();
-        });
-      }
-    }).catch((error) => {
-      switch (error.code) {
-        case ('auth/wrong-password'): {
-          this.errorPassword = true;
+    this.fireAuth.setPersistence(this.authService.getPersistence()||'local').then(() => {
+      this.fireAuth.signInWithEmailAndPassword(this.userData.email || '', password).then((user) => {
+        if (user.user?.emailVerified) {
+          this.authService.updateEmailBD(email).then();
+          user.user.updateEmail(email).then(user => {
+            this.emailForm.reset();
+            this.cleanForm();
+            this.authService.userUpdate();
+          });
         }
-          break;
-      }
+      }).catch((error) => {
+        switch (error.code) {
+          case ('auth/wrong-password'): {
+            this.errorPassword = true;
+          }
+            break;
+        }
+      });
     });
   }
 
@@ -166,6 +170,14 @@ export class EditDataComponent {
     this.labelArray = this.translateService.getLabel();
     this.label = this.labelArray[0];
     this.userData = this.authService.getUserDate();
+    this.userNameForm.setValue({userName: this.userData.userName||''});
+    this.photoURLForm.setValue({photoURL: this.userData.image});
+  }
+
+  setLanguage(lang: Language) {
+    this.translateService.setTranslate(lang.code).then();
+    setTimeout(() => this.labelArray = this.translateService.getLabel(), 500);
+    if (this.authService.getSigIn()) this.authService.updateLangBD(lang.code).then();
   }
 
   strongPass() {

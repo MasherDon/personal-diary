@@ -10,10 +10,10 @@ import { ThemeService } from "./service/theme.service";
 })
 
 export class AppComponent {
-  constructor(public startTranslate: StartTranslateService, private authService: AuthService, private themeService: ThemeService) {
+  constructor(public translateService: StartTranslateService, private authService: AuthService, private themeService: ThemeService) {
 
     this.authService.generate();
-    this.startTranslate.startTranslate();
+    this.translateService.startTranslate();
     this.themeService.generate();
     this.authService.startAuth();
   }

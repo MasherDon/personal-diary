@@ -12,20 +12,17 @@ import { Color } from "../interface/color";
 export class OptionsComponent {
   constructor(public themeService: ThemeService, public startTranslateService: StartTranslateService) {}
 
-  book: boolean = true;
-  pag: boolean = false;
-  animationRecord: boolean = true;
-  bookEditRecord: boolean = true;
-
+  book!: boolean;
+  pag!: boolean;
+  animationRecord!: boolean;
+  bookEditRecord!: boolean;
   altDark!: boolean;
 
   lightThemColor!: Color;
   darkThemColor!: Color;
   colorArray!: Color[];
-  darkThem!: boolean;
 
   ngOnInit() {
-    this.darkThem = this.themeService.getThemeBool();
     this.colorArray = this.startTranslateService.getColorThem();
     const lightColor = this.themeService.getLightColor();
     const darkColor = this.themeService.getDarkColor();
@@ -33,7 +30,28 @@ export class OptionsComponent {
     { if (colorItem.code === lightColor) this.lightThemColor = colorItem; });
     this.colorArray.map((colorItem) =>
     { if (colorItem.code === darkColor) this.darkThemColor = colorItem; });
+
     this.altDark = this.themeService.getAltDarkBool();
+    this.book = this.themeService.getMenuBook();
+    this.pag = this.themeService.getSwitchBook();
+    this.animationRecord = this.themeService.getAnimBook();
+    this.bookEditRecord = this.themeService.getEditorBook();
+  }
+
+  bookThem() {
+    this.themeService.setMenuBook(this.book);
+  }
+
+  pagThem() {
+    this.themeService.setSwitchBook(this.pag);
+  }
+
+  animationRecordThem() {
+    this.themeService.setAnimBook(this.animationRecord);
+  }
+
+  bookEditRecordThem() {
+    this.themeService.setEditorBook(this.bookEditRecord);
   }
 
   lightThemColorChange(color: Color) {

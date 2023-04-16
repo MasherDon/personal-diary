@@ -1,0 +1,2 @@
+<app-records *ngIf="!themeService.getMenuBook()" [sigIn]="authService.getSigIn()"></app-records>
+<app-book-records *ngIf="themeService.getMenuBook()" [theme]="themeService.getThemeBool()" [sigIn]="authService.getSigIn()"></app-book-records>

@@ -1,15 +1,14 @@
-<p-menubar [model]="startTranslateService.getMenuTranslate()" [autoDisplay]="true" [autoHide]="true">
+<p-menubar id="cap" [model]="translateService.getMenuTranslate()" [autoDisplay]="true" [autoHide]="true">
   <ng-template pTemplate="start">
     <div class="flex">
-      <img src="assets/images/diary.png" height="45" alt="diary" [style]="{filter: themeService.getThemeBool()?'invert(100%)':'invert(0%)'}">
+      <img src="assets/images/noun-book.png" height="45" alt="diary" [style]="{filter: themeService.getThemeBool()?'invert(100%)':'invert(0%)'}">
     </div>
   </ng-template>
   <ng-template pTemplate="end">
     <div class="flex flex-row justify-content-center align-items-center gap-3">
       <p-toggleButton styleClass="p-button-rounded p-button-outlined" [(ngModel)]="darkTheme" onIcon="pi pi-sun"
                       offIcon="pi pi-moon" (onChange)="changesThem()"></p-toggleButton>
-      <p-dropdown [options]="langArray" styleClass="w-8rem p-inputtext-sm" [(ngModel)]="lang" (onChange)="setLanguage(lang)"
-                    optionLabel="lang"></p-dropdown>
+      <app-dropdown-lang [language]="translateService.getLanguage()"></app-dropdown-lang>
       <p-avatar [image]="authService.gatImage()" [style]="{cursor: 'pointer'}" (click)="onSidebar.onWin = true"
                 size="large" shape="circle"></p-avatar>
     </div>

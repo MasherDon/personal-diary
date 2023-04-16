@@ -63,7 +63,9 @@
     "teg": "Number of tags",
     "records": "Number of records",
     "editData": "Edit user data",
-    "restore": "Restore"
+    "restore": "Restore",
+    "rememberMe": "Remember Me!",
+    "someone": "Else's device?"
   },
   "form": {
     "email": "Email",
@@ -72,12 +74,20 @@
     "nickname": "Nickname",
     "repetPassword": "Repetitive password",
     "photoURL": "Avatar",
-    "language": "Language",
     "delete": "Delete account",
     "update": "Update",
-    "deleteQuestion": "Delete?"
+    "deleteQuestion": "Delete?",
+    "save": "Save",
+    "nameless": "Nameless",
+    "tags": "Tags: tag, tag tag",
+    "search": "Search"
   },
-  "notFound": "Page not found.",
+  "button": {
+    "delete": "Delete"
+  },
+  "notFound": "Page not found?",
+  "notRecord": "You have no records!",
+  "notSearch": "Nothing found?",
   "error": {
     "emailUse": "The email address is already in use.",
     "emailInvalid": "The email address is not valid.",
@@ -101,7 +111,9 @@
     "notSave": "Want to login to save data?",
     "massEmail": "Message sent to email.",
     "notRestore": "Password recovery failed.",
-    "deleteProfile": "Are you sure you want to delete your account? In this case, all your data will be irretrievably lost!"
+    "deleteProfile": "Are you sure you want to delete your account? In this case, all your data will be irretrievably lost!",
+    "saveQuestion": "Save?",
+    "localSave": "Local entries found. Save them?"
   },
   "color": {
     "blue": "Blue",
@@ -112,7 +124,35 @@
   "options": {
     "adt": "Alternative dark theme",
     "hsbd": "Home screen book display",
+    "pag": "Paginator",
+    "pta": "Page Turning Animation",
+    "eiab": "Editing in a book",
     "darkTheme": "Dark theme",
     "lightTheme": "Light theme"
+  },
+  "editor": {
+    "enterHeader": "Enter a header",
+    "clickTune": "Click to tune",
+    "orDragToMove": "or drag to move",
+    "convert": "Convert to",
+    "add": "Add",
+    "text": "Text",
+    "heading": "Heading",
+    "list": "List",
+    "delimiter": "Delimiter",
+    "link": "Link",
+    "marker": "Marker",
+    "bold": "Bold",
+    "italic": "italic",
+    "title": "Title",
+    "message": "Message",
+    "addLink": "Add a link",
+    "notDisplayed": "The block can not be displayed correctly.",
+    "unordered": "Unordered",
+    "ordered": "Ordered",
+    "delete": "Delete",
+    "moveUp": "Move up",
+    "moveDown": "Move down",
+    "placeholder": "What to write..."
   }
 }

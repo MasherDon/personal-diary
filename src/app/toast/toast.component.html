@@ -38,3 +38,21 @@
     <p-button styleClass="p-button-raised p-button-danger" icon="pi pi-trash" [label]="'primeng.accept'|translate" (click)="cd.accept()"></p-button>
   </ng-template>
 </p-confirmDialog>
+
+<p-toast position="bottom-left" key="localSave" (onClose)="this.toastService.onLocalSave()" [showTransformOptions]="'translateY(100%)'">
+  <ng-template pTemplate="message">
+    <div class="flex flex-column gap-3" style="flex: 1">
+      <div class="flex gap-3">
+        <i class="pi pi-save" style="font-size: 3rem"></i>
+        <div class="flex flex-column gap-3">
+          <h4 style="margin: 0">{{ 'massage.saveQuestion'|translate }}</h4>
+          <p style="margin: 0">{{ 'massage.localSave'|translate }}</p>
+        </div>
+      </div>
+      <div class="flex gap-1">
+        <button type="button" style="min-width: 10rem" (click)="delete()" pButton [label] = "'editor.delete'|translate" class="p-button-raised p-button-success"></button>
+        <button type="button" style="min-width: 10rem" (click)="save()" pButton [label] = "'form.save'|translate" class="p-button-raised p-button-warning"></button>
+      </div>
+    </div>
+  </ng-template>
+</p-toast>

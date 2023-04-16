@@ -1,10 +1,63 @@
-<div class="p-card m-3">
-  <div class="field col-12 md:col-4">
-    <p-calendar [(ngModel)]="date" [showButtonBar]="true" [showIcon]="true"></p-calendar>
+<div class="flex order justify-content-center align-items-center gap-4" [style]="{'min-height': setHeight()}">
+  <div class="flex align-items-stretch">
+    <div class="flex align-items-center" [ngClass]="{hideButton: !leftArrow}">
+      <p-button styleClass="p-button-text list" [disabled]="!leftArrow" (onClick)="switch(true)">
+        <span [ngClass]="{'pi pi-angle-left': true}" style="font-size: 1.5rem"></span>
+      </p-button>
+    </div>
+    <div class="flex flex-column" [ngClass]="{menu: redact}">
+      <div *ngIf="!redact" class="flex align-items-center ml-4">
+        <p-tag *ngFor="let item of record.tag" class="mr-2" value="New" [pTooltip]="item.tag" tooltipPosition="bottom"
+               [style]="{'background': item.color}"></p-tag>
+      </div>
+      <div class="p-card flex flex-column" style="width: 561px; height: 675.5px">
+        <div class="flex justify-content-between gap-1 mt-3 ml-3 mr-3">
+          <div class="flex align-items-center gap-1">
+            <input type="text" pInputText [ngClass]="{hide: !redact}" [placeholder]="'form.nameless'|translate" [(ngModel)]="record.title" [disabled]="!redact"/>
+            <p-calendar styleClass="w-9rem" [ngClass]="{hide: !redact}" [(ngModel)]="date" [showButtonBar]="true" [showIcon]="redact" [disabled]="!redact"></p-calendar>
+          </div>
+          <div class="flex align-items-center gap-1">
+            <p-button *ngIf="redact" [label]="'form.save'|translate" (onClick)="addRecord()"></p-button>
+            <p-toggleButton styleClass="p-button-outlined" [(ngModel)]="redact" (onChange)="change()" onIcon="pi pi-pencil" offIcon="pi pi-eye"></p-toggleButton>
+          </div>
+        </div>
+        <p-divider type="solid"></p-divider>
+        <div class="flex flex-column justify-content-between" style="height: 600px">
+          <div id="editor" class="ml-5 mr-3"></div>
+          <div class="flex justify-content-center">
+            <span class="m-2">{{ lang }}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="flex align-items-center" [ngClass]="{hideButton: !rightArrow&&!rightPlus||!rightArrow&&!redact}">
+      <p-button styleClass="p-button-text list" [disabled]="!rightArrow&&!rightPlus||!rightArrow&&!redact" (onClick)="switch(false)">
+        <span [ngClass]="{'pi': true, 'pi-angle-right': rightArrow, 'pi-plus': rightPlus}" style="font-size: 1.5rem"></span>
+      </p-button>
+    </div>
+  </div>
+  <div *ngIf="redact" class="p-card extraMenu flex flex-column">
+    <p-chips class="p-fluid m-2" [(ngModel)]="tag" [placeholder]="'form.tags'|translate" separator=" |," [allowDuplicate]="false" [max]="5" [showClear]="true">
+      <ng-template let-item pTemplate="item">{{ item }}<i class="pi pi-tag ml-2"></i></ng-template>
+    </p-chips>
+    <p-fileUpload *ngIf="false" class="m-1" [files]="files" [multiple]="true" [customUpload]="true" accept="image/*" (uploadHandler)="uploadHandler($event)"
+                  [uploadIcon]="'pi pi-cloud-upload'">
+      <ng-template pTemplate="file"></ng-template>
+      <ng-template let-files pTemplate="content">
+<!--        <ul *ngIf="files.length">-->
+<!--          <li *ngFor="let file of files"> {{ file.name }} - {{ file.size }} bytes</li>-->
+<!--        </ul>-->
+      </ng-template>
+    </p-fileUpload>
+    <div *ngIf="false" class="flex justify-content-between align-items-center m-2 gap-1">
+      <div class="flex p-fluid">
+        <p-autoComplete [(ngModel)]="selectedCountries" [suggestions]="filteredCountries" (completeMethod)="filterCountry($event)" field="tag"
+                        [multiple]="true" placeholder="" styleClass="autoComplete"></p-autoComplete>
+      </div>
+      <div class="flex gap-2">
+        <p-button icon="pi pi-cloud-download" (onClick)="setImage()"></p-button>
+        <p-button icon="pi pi-trash" (onClick)="deleteImage()"></p-button>
+      </div>
+    </div>
   </div>
 </div>
-<div class="p-card m-3">
-  <p-editor [(ngModel)]="text" [style]="{'height':'320px'}">
-  </p-editor>
-</div>
-

@@ -19,6 +19,10 @@ export class SidebarComponent {
 
   active: number = 0;
 
+  ngOnChanges() {
+    this.active = this.sigOrReg;
+  }
+
   onRestore() {
     this.active = 2;
   }
@@ -29,9 +33,5 @@ export class SidebarComponent {
 
   exitSidebar() {
     this.onSidebar.onWin = false;
-  }
-
-  ngOnChanges() {
-    this.active = this.sigOrReg;
   }
 }

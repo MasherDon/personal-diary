@@ -19,23 +19,23 @@
   <div class="flex justify-content-center gap-4">
     <div class="flex align-items-center gap-2" [pTooltip]="'options.adt'|translate" tooltipPosition="top">
       <p-checkbox [binary]="true" [(ngModel)]="altDark" (onChange)="altDarkThem()"></p-checkbox>
-      <img src="assets/images/moon.svg" alt="altDark" [style]="{height: '2rem', filter: darkThem?'invert(100%)':'invert(0%)'}">
+      <span class="material-symbols-outlined" style="font-size: 2rem">night_sight_max</span>
     </div>
     <div class="flex align-items-center gap-2" [pTooltip]="'options.hsbd'|translate" tooltipPosition="top">
-      <p-checkbox [binary]="true" [(ngModel)]="book"></p-checkbox>
-      <img src="assets/images/menu_book.svg" alt="book" [style]="{height: '2rem', filter: darkThem?'invert(100%)':'invert(0%)'}">
+      <p-checkbox [binary]="true" [(ngModel)]="book" (onChange)="bookThem()"></p-checkbox>
+      <span class="material-symbols-outlined" style="font-size: 2rem">menu_book</span>
     </div>
-    <div class="flex align-items-center gap-2">
-      <p-checkbox [disabled]="!book" [binary]="true" [(ngModel)]="pag"></p-checkbox>
-      <img src="assets/images/switch.svg" alt="pages" [style]="{height: '2rem', filter: darkThem?'invert(100%)':'invert(0%)'}">
+    <div class="flex align-items-center gap-2" [pTooltip]="'options.pag'|translate" tooltipPosition="top">
+      <p-checkbox [disabled]="!book" [binary]="true" [(ngModel)]="pag" (onChange)="pagThem()"></p-checkbox>
+      <span class="material-symbols-outlined" style="font-size: 2rem">switch_left</span>
     </div>
-    <div class="flex align-items-center gap-2">
-      <p-checkbox [disabled]="!book" [binary]="true" [(ngModel)]="animationRecord"></p-checkbox>
-      <img src="assets/images/auto_stories.svg" alt="animation" [style]="{height: '2rem', filter: darkThem?'invert(100%)':'invert(0%)'}">
+    <div class="flex align-items-center gap-2" [pTooltip]="'options.pta'|translate" tooltipPosition="top">
+      <p-checkbox [disabled]="!book" [binary]="true" [(ngModel)]="animationRecord" (onChange)="animationRecordThem()"></p-checkbox>
+      <span class="material-symbols-outlined" style="font-size: 1.8rem">auto_stories</span>
     </div>
-    <div class="flex align-items-center gap-2">
-      <p-checkbox [disabled]="!book" [binary]="true" [(ngModel)]="bookEditRecord"></p-checkbox>
-      <img src="assets/images/book_edit.svg" alt="bookEdit" [style]="{height: '2rem', filter: darkThem?'invert(100%)':'invert(0%)'}">
+    <div class="flex align-items-center gap-2" [pTooltip]="'options.eiab'|translate" tooltipPosition="top">
+      <p-checkbox [disabled]="!book" [binary]="true" [(ngModel)]="bookEditRecord" (onChange)="bookEditRecordThem()"></p-checkbox>
+      <span class="material-symbols-outlined" style="font-size: 2rem">history_edu</span>
     </div>
   </div>
 </div>

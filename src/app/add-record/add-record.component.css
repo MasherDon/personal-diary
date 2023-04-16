@@ -1,1 +1,27 @@
+@media all and (min-width: 1460px) {
+  .extraMenu {
+    position: absolute;
+    top: 92px;
+    left: 30px;
+    width: 420px;
+  }
+}
 
+@media (max-width: 1460px) and (min-width: 0px) {
+  .order {
+    flex-direction: column-reverse;
+  }
+  .menu {
+    margin-bottom: 1rem;
+  }
+  .extraMenu {
+    position: static;
+    width: 550px;
+    margin-top: 1rem;
+  }
+}
+
+.hideButton {
+  opacity: 0;
+  transition: opacity 0.5s ease;
+}

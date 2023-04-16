@@ -1,5 +1,5 @@
 <p-sidebar [visible]="onSidebar.onWin" position="right" (onHide)="closeWin.emit()" [blockScroll]="true"
-           styleClass="w-32rem" [baseZIndex]="10000"
+           styleClass="w-sidebar" [baseZIndex]="10000" (onShow)="this.authService.userUpdate()"
            [modal]="false" [dismissible]="false" xmlns="http://www.w3.org/1999/html">
   <ng-template pTemplate="header">
     <div class="flex justify-content-center" style="width: 100%">
@@ -51,16 +51,16 @@
             <p style="margin: 0">{{ userDate.email }}</p>
           </div>
         </div>
-        <div class="flex gap-2 mr-2">
+        <div class="flex gap-2 mr-3">
           <p-divider layout="vertical"></p-divider>
           <div class="flex flex-column justify-content-center align-items-center gap-2">
             <div class="flex gap-2" [pTooltip]="'sidebar.records'|translate" tooltipPosition="top">
               <span class="pi pi-bookmark" style="font-size: 1.5rem"></span>
-              <span style="font-size: 1.3rem">20</span>
+              <span style="font-size: 1.3rem">{{ userDate.records }}</span>
             </div>
             <div class="flex gap-2" [pTooltip]="'sidebar.teg'|translate" tooltipPosition="top">
               <span class="pi pi-tags" style="font-size: 1.5rem"></span>
-              <span style="font-size: 1.3rem">40</span>
+              <span style="font-size: 1.3rem">{{ userDate.tag }}</span>
             </div>
           </div>
         </div>
@@ -94,7 +94,7 @@
         </p-accordionTab>
       </p-accordion>
       <div class="flex justify-content-center align-items-center" *ngIf="this.authService.getSigIn()">
-        <p-button icon="pi pi-sign-out" (click)="authService.logOut()" [label]="'sidebar.signIn'|translate" styleClass="p-button-raised p-button-danger"></p-button>
+        <p-button icon="pi pi-sign-out" (onClick)="authService.logOut()" [label]="'sidebar.signIn'|translate" styleClass="p-button-raised p-button-danger"></p-button>
       </div>
     </div>
   </ng-template>

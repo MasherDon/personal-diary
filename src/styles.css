@@ -5,9 +5,26 @@ body {
 body, .p-component, .p-inputtext {
   font-family: 'El Messiri', sans-serif;
 }
-.freehand {
-  font-family: 'Caveat', cursive;
+
+.codex-editor, .p-component, .cdx-block, .ct__content, .p-component, .p-inputtext, body {
+  font-size: 100%;
 }
+h1.ce-header {
+  font-size: 2.25rem;
+  line-height: 2rem;
+}
+h2.ce-header {
+  font-size: 1.5rem;
+  line-height: 1.5rem;
+}
+h3.ce-header {
+  font-size: 1rem;
+  line-height: 1.25rem;
+}
+.image-tool__image-picture {
+  max-height: 460px;
+}
+
 .p-inputtext.pass {
   padding: 0;
 }
@@ -38,4 +55,111 @@ body, .p-component, .p-inputtext {
 }
 .p-fieldset .p-fieldset-content {
   padding: 0.5rem;
+}
+
+/*.ce-block__content, .ce-toolbar__content { max-width: calc(100% - 70px) !important; } .cdx-block { max-width: 100% !important; }*/
+/*.ce-block__content, .ce-toolbar__content { max-height: 550px !important; } .cdx-block { max-height: 550px !important; }*/
+
+.ce-popover {
+  color: var(--gray-900);
+}
+.ce-inline-toolbar {
+  color: var(--gray-900);
+}
+.ce-toolbar__plus {
+  color: var(--text-color);
+}
+.ce-toolbar__plus:hover {
+  color: var(--surface-a);
+}
+.ce-toolbar__settings-btn {
+  color: var(--text-color);
+}
+.ce-toolbar__settings-btn:hover {
+  color: var(--surface-a);
+}
+.cdx-search-field__input {
+  color: var(--gray-900);
+}
+.ce-block--selected .ce-block__content {
+  background: 0;
+}
+.ce-paragraph .cdx-marker {
+  color: var(--text-color);
+  background: var(--primary-color);
+}
+.ce-inline-tool-input {
+  color: var(--gray-900);
+  background: #fff;
+}
+.p-fileupload-buttonbar {
+  display: flex;
+  justify-content: space-between;
+}
+.p-button.p-button-text.list {
+  padding: 8px;
+}
+.p-fileupload .p-fileupload-buttonbar .p-button {
+  margin-right: 0;
+}
+.p-fileupload .p-fileupload-buttonbar {
+  padding: 0.5rem;
+}
+.p-fileupload .p-fileupload-content {
+  padding: 0;
+}
+.p-fileupload .p-progressbar {
+  height: 0;
+}
+.p-inputtext.hide {
+  border: 0;
+}
+.hide .p-calendar .p-inputtext {
+  border: 0;
+}
+.p-tag-value {
+  color: rgba(0, 0, 0, 0%);
+  width: 48px;
+  height: 18px;
+}
+.p-virtualscroller .p-virtualscroller-content {
+  background: var(--surface-b);
+}
+.p-card {
+  box-shadow: 0 2px 1px -1px var(--text-color), 0 1px 1px 0 var(--text-color),
+  0 1px 3px 0 var(--text-color);
+}
+.p-card-hide {
+  background: var(--surface-a);
+  color: var(--text-color);
+  border-radius: 3px;
+}
+
+.freehand {
+  font-family: 'Caveat', cursive;
+}
+.Caveat .cdx-block, .Caveat .ce-header {
+  font-family: 'Caveat', cursive;
+}
+
+@media all and (min-width: 600px) {
+  .w-sidebar {
+    width: 30rem !important;
+  }
+}
+@media (max-width: 600px) and (min-width: 0px) {
+  .w-sidebar {
+    width: 100vw !important;
+  }
+}
+
+@media all and (min-width: 1460px) {
+  .autoComplete {
+    width: 19rem !important;
+  }
+}
+@media (max-width: 1460px) and (min-width: 0px) {
+  .autoComplete {
+    width: 27rem !important;
+  }
 }

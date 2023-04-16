@@ -1,7 +1,8 @@
-p-avatar:hover {
-  filter: drop-shadow(2px 4px 8px var(--primary-color));
-  transition: filter 0.5s ease;
-}
 p-avatar {
+  transition: filter 0.5s ease;
   height: 48px;
+}
+p-avatar:hover {
+  filter: drop-shadow(2px 4px 6px var(--primary-color));
+  transition: filter 0.5s ease;
 }

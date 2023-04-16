@@ -4,7 +4,6 @@ import { AuthService } from "../service/auth.service";
 import { AngularFireAuth } from "@angular/fire/compat/auth";
 import { ToastService } from "../service/toast.service";
 import { UserData } from "../interface/userData";
-import {StartTranslateService} from "../service/startTranslate.service";
 
 @Component({
   selector: 'app-register',
@@ -14,7 +13,7 @@ import {StartTranslateService} from "../service/startTranslate.service";
 
 export class RegisterComponent {
   constructor(private formBuilder: FormBuilder, public authService: AuthService, private fireAuth: AngularFireAuth,
-              private toastService: ToastService, private translateService: StartTranslateService) {}
+              private toastService: ToastService) {}
 
   @Output() sigInClick = new EventEmitter();
 
@@ -37,48 +36,50 @@ export class RegisterComponent {
     let userName = '' + this.registerForm.value.userName; userName = userName.trim();
     let email = '' + this.registerForm.value.email; email = email.trim();
     let password = '' + this.registerForm.value.password; password = password.trim();
-    this.fireAuth.createUserWithEmailAndPassword(email, password).then((user) => {
-      this.invalidEmail = 0;
-      this.invalidPass = false;
-      this.registerForm.reset();
-      if(user.additionalUserInfo?.isNewUser) {
-        this.toastService.onNotRegister();
-        this.toastService.successRegistration();
-        this.sigInClick.emit();
-        this.fireAuth.currentUser.then((user) => {
-          user?.sendEmailVerification();
-          user?.updateProfile({
-            displayName: userName,
-            photoURL: 'assets/images/avatar.jpg'
-          }).then(() => {
-            this.authService.generateBD(user);
+    this.fireAuth.setPersistence(this.authService.getPersistence()||'local').then(() => {
+      this.fireAuth.createUserWithEmailAndPassword(email, password).then((user) => {
+        this.invalidEmail = 0;
+        this.invalidPass = false;
+        this.registerForm.reset();
+        if (user.additionalUserInfo?.isNewUser) {
+          this.toastService.onNotRegister();
+          this.toastService.successRegistration();
+          this.sigInClick.emit();
+          this.fireAuth.currentUser.then((user) => {
+            user?.sendEmailVerification();
+            user?.updateProfile({
+              displayName: userName,
+              photoURL: 'assets/images/avatar.jpg'
+            }).then(() => {
+              this.authService.generateBD();
+            });
           });
-        });
-      }
-    }).catch((error) => {
-      console.log(error);
-      switch (error.code) {
-        case ('auth/email-already-in-use'): {
-          this.invalidEmail = 1;
         }
-          break;
-        case ('auth/invalid-email'): {
-          this.invalidEmail = 2;
+      }).catch((error) => {
+        console.log(error);
+        switch (error.code) {
+          case ('auth/email-already-in-use'): {
+            this.invalidEmail = 1;
+          }
+            break;
+          case ('auth/invalid-email'): {
+            this.invalidEmail = 2;
+          }
+            break;
+          case ('auth/operation-not-allowed'): {
+            this.toastService.operationNotAllowed();
+          }
+            break;
+          case ('auth/weak-password'): {
+            this.invalidPass = true;
+          }
+            break;
+          default: {
+            this.toastService.errorRegistration();
+          }
+            break;
         }
-          break;
-        case ('auth/operation-not-allowed'): {
-          this.toastService.operationNotAllowed();
-        }
-          break;
-        case ('auth/weak-password'): {
-          this.invalidPass = true;
-        }
-          break;
-        default: {
-          this.toastService.errorRegistration();
-        }
-          break;
-      }
+      });
     });
   }
 

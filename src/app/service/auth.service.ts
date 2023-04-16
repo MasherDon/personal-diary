@@ -5,13 +5,14 @@ import { UserData } from '../interface/userData';
 import { ToastService } from "./toast.service";
 import { StartTranslateService } from "./startTranslate.service";
 import { AngularFirestore } from "@angular/fire/compat/firestore";
+import { RecordsService } from "./records.service";
 
 @Injectable({
   providedIn: 'root'
 })
 
 export class AuthService {
-  constructor(private fireAuth: AngularFireAuth, private router: Router, private toastService: ToastService,
+  constructor(private fireAuth: AngularFireAuth, private router: Router, private toastService: ToastService, private recordsService: RecordsService,
               private translateService: StartTranslateService, private angularFirestore: AngularFirestore) { }
 
   data!: UserData;
@@ -22,87 +23,125 @@ export class AuthService {
       userName: 'Not authorized user',
       image: 'assets/images/avatar.jpg',
     }
+    if(!this.getPersistence()) {
+      this.setPersistence('local')
+    }
+  }
+
+  setPersistence(value: string) {
+    localStorage.removeItem('persistence');
+    localStorage.setItem('persistence', value)
+  }
+
+  getPersistence() {
+    return localStorage.getItem('persistence');
   }
 
   startAuth() {
-    this.fireAuth.authState.subscribe((user) => {
+    this.fireAuth.authState.subscribe(user => {
       if (user && user?.emailVerified) {
         this.setSigIn(true);
         this.userUpdate();
+        if (localStorage.getItem('records')) this.toastService.offLocalSave();
       } else {
         this.setSigIn(false);
         this.generate();
         this.toastService.offNotRegister();
-        this.fireAuth.languageCode = new Promise(() => this.translateService.getLanguage());
       }
     });
   }
 
   userUpdate() {
-    this.fireAuth.user.subscribe(async (user) => {
+    this.fireAuth.user.subscribe(user => {
       if (user && user?.emailVerified) {
         this.data.userName = user.displayName || 'User';
         this.data.email = user.email || '';
         this.data.image = user.photoURL || 'assets/images/avatar.jpg';
-        this.data.uid = user.uid;
-        const getData = await this.getUserBD();
-        this.data.lang = getData['lang'];
-        const lang = this.translateService.getLanguage();
-        if (lang !== this.data.lang && this.data?.lang) {
-          this.translateService.setTranslate(this.data.lang).then();
-        }
+        this.setDataUser(user.uid).then();
       }
     });
   }
 
-  generateBD(user: any) {
-    const name = 'user/' + user?.uid + '/data';
-    this.angularFirestore.firestore.collection(name).add({
-      userName: user?.displayName,
-      email: user?.email,
-      image: user?.photoURL,
-      lang: this.translateService.getLanguage(),
-      uid: user?.uid
-    }).then();
+  async setDataUser(uid: string) {
+    const dataBD = await this.getUserBD(uid);
+    const languageBD = dataBD['lang'];
+    const language = this.translateService.getLanguage();
+    if (language !== languageBD) {
+      this.translateService.setTranslate(languageBD).then();
+    }
+    const record = await this.recordsService.getAllRecordsBD(uid);
+    this.data.records = record.docs.length;
+    const tags = await this.recordsService.getTagsBD(uid);
+    this.data.tag = tags.length;
   }
 
-  async getUserBD() {
-    const name = 'user/' + this.data.uid + '/data';
+  async getUserBD(uid: string) {
+    const name = 'user/' + uid + '/data';
     const arrayDoc = await this.angularFirestore.firestore.collection(name).get();
-    return arrayDoc.docs[0].data();
+    return  arrayDoc.docs[0].data();
+  }
+
+  generateBD() {
+    this.fireAuth.authState.subscribe(async user => {
+      const name = 'user/' + user?.uid + '/data';
+      this.angularFirestore.firestore.collection(name).add({
+        userName: user?.displayName,
+        email: user?.email,
+        image: user?.photoURL,
+        lang: this.translateService.getLanguage(),
+        uid: user?.uid
+      }).then();
+    });
   }
 
   async updateLangBD(lang: string) {
-    const name = 'user/' + this.data.uid + '/data';
-    const arrayDoc = await this.angularFirestore.firestore.collection(name).get();
-    this.angularFirestore.firestore.collection(name).doc(arrayDoc.docs[0].id).update({lang: lang}).then();
+    this.fireAuth.authState.subscribe(async user => {
+      const name = 'user/' + user?.uid + '/data';
+      const arrayDoc = await this.angularFirestore.firestore.collection(name).get();
+      this.angularFirestore.firestore.collection(name).doc(arrayDoc.docs[0].id).update({lang: lang}).then();
+    });
   }
 
-  async updateNameBD(user: string) {
-    const name = 'user/' + this.data.uid + '/data';
-    const arrayDoc = await this.angularFirestore.firestore.collection(name).get();
-    this.angularFirestore.firestore.collection(name).doc(arrayDoc.docs[0].id).update({userName: user}).then();
+  async updateNameBD(userName: string) {
+    this.fireAuth.authState.subscribe(async user => {
+      const name = 'user/' + user?.uid + '/data';
+      const arrayDoc = await this.angularFirestore.firestore.collection(name).get();
+      this.angularFirestore.firestore.collection(name).doc(arrayDoc.docs[0].id).update({userName: userName}).then();
+    });
   }
 
   async updateEmailBD(email: string) {
-    const name = 'user/' + this.data.uid + '/data';
-    const arrayDoc = await this.angularFirestore.firestore.collection(name).get();
-    this.angularFirestore.firestore.collection(name).doc(arrayDoc.docs[0].id).update({email: email}).then();
+    this.fireAuth.authState.subscribe(async user => {
+      const name = 'user/' + user?.uid + '/data';
+      const arrayDoc = await this.angularFirestore.firestore.collection(name).get();
+      this.angularFirestore.firestore.collection(name).doc(arrayDoc.docs[0].id).update({email: email}).then();
+    });
   }
 
   async updateImageBD(image: string) {
-    const name = 'user/' + this.data.uid + '/data';
-    const arrayDoc = await this.angularFirestore.firestore.collection(name).get();
-    this.angularFirestore.firestore.collection(name).doc(arrayDoc.docs[0].id).update({image: image}).then();
+    this.fireAuth.authState.subscribe(async user => {
+      const name = 'user/' + user?.uid + '/data';
+      const arrayDoc = await this.angularFirestore.firestore.collection(name).get();
+      this.angularFirestore.firestore.collection(name).doc(arrayDoc.docs[0].id).update({image: image}).then();
+    });
   }
 
   async deleteUser() {
-    const name = 'user/' + this.data.uid + '/data';
-    const arrayDoc = await this.angularFirestore.firestore.collection(name).get();
-    this.angularFirestore.firestore.collection(name).doc(name + `/${arrayDoc.docs[0].id}`).delete().then();
-    this.fireAuth.currentUser.then(user => {
-      user?.delete().then(() => {
-        this.router.navigate(['/']).then();
+    this.fireAuth.authState.subscribe(async user => {
+      const data = 'user/' + user?.uid + '/data';
+      const arrayData = await this.angularFirestore.firestore.collection(data).get();
+      this.angularFirestore.firestore.collection(data).doc(arrayData.docs[0].id).delete().then();
+
+      const records = 'user/' + user?.uid + '/records';
+      const arrayRecords = await this.angularFirestore.firestore.collection(records).get();
+      for (let n = 0; n < arrayRecords.docs.length; n++) {
+        this.angularFirestore.firestore.collection(records).doc(arrayRecords.docs[0].id).delete().then();
+      }
+
+      this.fireAuth.currentUser.then(user => {
+        user?.delete().then(() => {
+          this.router.navigate(['/']).then();
+        });
       });
     });
   }

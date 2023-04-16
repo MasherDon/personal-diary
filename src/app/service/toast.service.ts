@@ -43,15 +43,26 @@ export class ToastService {
   }
 
   offVerified() {
+    this.messageService.clear('verified');
     this.messageService.add({ key: 'verified', severity: 'error', sticky: true });
-  }
-  offNotRegister() {
-    this.messageService.add( {key: 'notRegister', severity: 'warn', sticky: true});
   }
   onVerified() {
     this.messageService.clear('verified');
   }
+
+  offNotRegister() {
+    this.messageService.clear('notRegister');
+    this.messageService.add( {key: 'notRegister', severity: 'warn', sticky: true});
+  }
   onNotRegister() {
     this.messageService.clear('notRegister');
+  }
+
+  offLocalSave() {
+    this.messageService.clear('localSave');
+    this.messageService.add( {key: 'localSave', severity: 'warn', sticky: true});
+  }
+  onLocalSave() {
+    this.messageService.clear('localSave');
   }
 }

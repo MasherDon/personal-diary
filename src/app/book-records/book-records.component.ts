@@ -1,9 +1,9 @@
 import { Component, Inject, Input } from '@angular/core';
 import { ThemeService } from "../service/theme.service";
 import { Record } from "../interface/record";
-import { Page } from "../interface/page";
 import { AngularFireAuth } from "@angular/fire/compat/auth";
 import { RecordsService } from "../service/records.service";
+import { Router } from "@angular/router";
 
 // @ts-ignore
 import { PageFlip } from 'page-flip';
@@ -18,10 +18,9 @@ import { DOCUMENT } from "@angular/common";
 
 export class BookRecordsComponent {
   constructor(@Inject(DOCUMENT) public document: Document, public themeService: ThemeService, private angularFireAuth: AngularFireAuth,
-              private recordsService: RecordsService) {}
+              private recordsService: RecordsService, public router: Router) {}
 
   @Input() sigIn!: boolean;
-  @Input() theme!: boolean;
 
   editorJsHTML = require("editorjs-html");
   edJsParser = this.editorJsHTML();
@@ -29,26 +28,72 @@ export class BookRecordsComponent {
   pageFlip: PageFlip;
 
   records!: Record[]
-  htmlRecord: Page[] = [];
 
   notFound: boolean = false;
+  bottom: boolean = false;
+  not: boolean = false;
+
+  first: number = 2;
 
   ngOnInit() {
+    this.start();
+  }
+
+  ngOnChanges() {
+    if (this.not) {
+      this.router.navigate(['/record']).then();
+    }
+  }
+
+  start() {
     this.startBook().then(async () => {
+      let records;
       this.angularFireAuth.authState.subscribe(async user => {
         if (user) {
           // @ts-ignore
-          this.records = await this.recordsService.getAllRecordsBDArray(user.uid)
+          records = await this.recordsService.getAllRecordsBDArray(user.uid)
         } else {
-          this.records = await this.recordsService.getAllRecords();
+          records = await this.recordsService.getAllRecords();
         }
-        await this.setHtml();
+        if (records.length) {
+          // @ts-ignore
+          this.records = records.sort(this.sorting);
+          await this.setHtml();
+        } else {
+          this.notFound = true;
+        }
+        this.bottom = true;
+        setTimeout(async () => {
+          await this.pageFlip.updateFromHtml(document.querySelectorAll('.page'));
+          this.not = true;
+        }, 100);
+        setTimeout(() => {
+          this.pageFlip.flip(2, 'bottom');
+        },1000);
       });
     });
   }
 
-  ngOnChanges() {
+  onPageChange(event: any) {
+    if (this.not) {
+      if (this.themeService.getAnimBook()) {
+        if (this.first > event.page) {
+          this.pageFlip.flip(event.page, 'top');
+        }
+        if (this.first < event.page) {
+          this.pageFlip.flip(event.page, 'bottom');
+        }
+      } else {
+        this.pageFlip.turnToPage(event.page);
+      }
+      this.first = event.page;
+    }
+  }
 
+  // @ts-ignore
+  sorting(a: Record, b: Record) {
+    if (a.date > b.date) return 1;
+    if (a.date < b.date) return -1;
   }
 
   async startBook() {
@@ -57,15 +102,14 @@ export class BookRecordsComponent {
       height: 675.5,
       size: "fixed",
 
-      // minWidth: 561,
-      // maxWidth: 561,
-      // minHeight: 675.5,
-      // maxHeight: 675.5,
-
-      drawShadow: !this.themeService.getThemeBool(),
+      drawShadow: false,
       flippingTime: 800,
-
+      swipeDistance: 15,
       maxShadowOpacity: 0.3,
+
+      useMouseEvents: !this.themeService.getSwitchBook(),
+      disableFlipByClick: true,
+
       showCover: true,
       mobileScrollSupport: false,
     });
@@ -73,21 +117,24 @@ export class BookRecordsComponent {
   }
 
   async setHtml() {
-    const htmlArray = [];
-    const html = [];
-    for (let n = 0; n < this.records.length; n++) {
-      for(let i = 0; i < this.records[n].text.length; i++) {
-        const page = await this.edJsParser.parse(this.records[n].text[i]);
-        htmlArray.push(page.join(''));
+    let records = this.records;
+    let page = 1;
+    for (let n = 0; n < records.length; n++) {
+      records[n].date = new Date(records[n].date);
+      if (records[n].title.length>12) {
+        records[n].title = records[n].title.slice(0, 11) + '...';
+      } else {
+        records[n].title = records[n].title.slice(0, 11);
+      }
+      for(let i = 0; i < records[n].text.length; i++) {
+        records[n].text[i] = {html: (await this.edJsParser.parse(records[n].text[i]).join('')), pag: page};
+        page++;
       }
     }
-    for (let n = 0; n < htmlArray.length; n++) {
-      html.push({html: htmlArray[n], page: n});
+    if (!(page%2)) {
+      records[records.length-1].text.push({html: '', pag: page})
     }
-    this.htmlRecord = html;
-    setTimeout(() => {
-      //this.pageFlip.updateFromHtml(document.querySelectorAll('.page'));
-    })
+    this.records = records;
   }
 
   leftOrRight(item: number) {
@@ -96,6 +143,6 @@ export class BookRecordsComponent {
 
   height() {
     const cap = document.getElementById('cap') as HTMLLinkElement;
-    return `${document.documentElement.clientHeight - cap.offsetHeight - 16}px`
+    return `${document.documentElement.clientHeight - cap.offsetHeight}px`
   }
 }

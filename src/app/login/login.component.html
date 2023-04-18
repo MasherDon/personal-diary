@@ -20,7 +20,7 @@
   </p-divider>
 </form>
 <div class="flex justify-content-center align-items-center gap-2">
-  <p-button styleClass="p-button-outlined">
+  <p-button styleClass="p-button-outlined" [disabled]="true">
     <span class="pi pi-google" style="font-size: 1.5rem"></span>
   </p-button>
   <p-toggleButton [(ngModel)]="persistence" (onChange)="changePersistence()" [onLabel]="'sidebar.rememberMe'|translate" [offLabel]="'sidebar.someone'|translate"></p-toggleButton>

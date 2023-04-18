@@ -43,6 +43,7 @@ import { SplitButtonModule } from 'primeng/splitbutton';
 import { SkeletonModule } from 'primeng/skeleton';
 import { TagModule } from 'primeng/tag';
 import { AutoCompleteModule } from 'primeng/autocomplete';
+import { PaginatorModule } from 'primeng/paginator';
 
 import { AppComponent } from './app.component';
 import { CapComponent } from './cap/cap.component';
@@ -64,13 +65,17 @@ import { EditorRecordComponent } from './editor-record/editor-record.component';
 import { BookComponent } from './book/book.component';
 import { BookSearchComponent } from './book-search/book-search.component';
 import { BookRecordsComponent } from './book-records/book-records.component';
+import { CrutchComponent } from './crutch/crutch.component';
 
 const routes: Routes = [
   {
     path: '',
     title: 'Personal Diary',
     component: BookComponent,
-    runGuardsAndResolvers: 'always'
+  },
+  {
+    path: 'record',
+    component: CrutchComponent,
   },
   {
     path: 'search',
@@ -124,6 +129,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     BookComponent,
     BookSearchComponent,
     BookRecordsComponent,
+    CrutchComponent,
   ],
   imports: [
     BrowserModule,
@@ -170,6 +176,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     SplitButtonModule,
     TagModule,
     AutoCompleteModule,
+    PaginatorModule,
   ],
   exports: [RouterModule],
   providers: [ MessageService, ConfirmationService ],

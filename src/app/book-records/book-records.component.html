@@ -1,4 +1,4 @@
-<div class="flex justify-content-center align-items-center page-book" [style]="{height: height()}">
+<div class="flex flex-column justify-content-center align-items-center page-book" [style]="{'min-height': height()}">
   <div class="flip-book" id="book" style="max-height: 675.5px">
     <div class="page page-cover page-cover-top" data-density="hard">
       <div class="flex justify-content-center h-full">
@@ -6,12 +6,29 @@
       </div>
     </div>
     <div class="page page-hard page-cover-top"></div>
-    <div *ngIf="htmlRecord.length">
-      <div *ngFor="let item of htmlRecord" class="page" [innerHTML]="item.html" [ngClass]="{left:leftOrRight(item.page),right:leftOrRight(item.page)}"></div>
+    <div *ngIf="bottom">
+      <div *ngFor="let record of this.records">
+        <div *ngFor="let text of record.text; index as i" class="page" [ngClass]="{left:(i % 2),right:!(i % 2)}">
+          <div class="flex flex-column">
+            <div *ngIf="i < 1" class="flex justify-content-center align-items-center gap-2 mt-3">
+              <div class="flex align-items-center ml-4" style="position: absolute; top: -13px; left: 60px">
+                <p-tag *ngFor="let tag of record.tag" class="mr-2" value="New" [pTooltip]="tag.tag" tooltipPosition="bottom"
+                       [style]="{'background': tag.color, cursor: 'pointer'}" (click)="this.router.navigate(['/search'], {queryParams: {tag: tag}})"></p-tag>
+              </div>
+              <h2 (click)="router.navigate( ['/record', record['syllable']])" style="cursor: pointer">{{ record.title }}</h2>
+              <p-calendar (click)="this.router.navigate(['/search'],{queryParams: {date: record.date}})" styleClass="w-7rem"
+                          class="hide" [(ngModel)]="record.date" [disabled]="true"></p-calendar>
+              <p-button *ngIf="themeService.getEditorBook()" icon="pi pi-pencil" (click)="this.router.navigate(['/record', record['syllable']],{queryParams: {edit: true}})" styleClass="p-button-text"></p-button>
+            </div>
+            <div class="flex flex-column mr-3 ml-3" [ngClass]="{'mt-7': i > 0}" [innerHTML]="text.html"></div>
+            <span style="position: absolute; bottom: 20px; right: 30px">{{ text.pag }}</span>
+          </div>
+        </div>
+      </div>
     </div>
     <div *ngIf="notFound">
       <div class="page left">
-        <div class="flex justify-content-center align-items-center freehand">
+        <div class="flex justify-content-center align-items-center freehand h-full">
           <div class="flex flex-column justify-content-center align-items-center gap-3">
             <img src="assets/images/noun-book-and-pen.png" height="284" alt="diary" [style]="{filter: themeService.getThemeBool()?'invert(100%)':'invert(0%)'}">
             <div class="font-hold text-900 text-center text-6xl">{{ 'notRecord'|translate }}</div>
@@ -21,9 +38,13 @@
       </div>
       <div class="page right"></div>
     </div>
-    <div class="page page-hard page-cover-bottom"></div>
-    <div class="page page-cover page-cover-bottom" data-density="hard">
-      <div class="flex justify-content-center h-full"></div>
+    <div *ngIf="bottom">
+      <div class="page page-hard page-cover-bottom"></div>
+      <div class="page page-cover page-cover-bottom" data-density="hard"></div>
     </div>
+  </div>
+  <div *ngIf="themeService.getSwitchBook()&&not">
+    <p-paginator [first]="2" [rows]="1" [totalRecords]="pageFlip.getPageCount()" (onPageChange)="onPageChange($event)"
+                 [showJumpToPageDropdown]="true" [showPageLinks]="false"></p-paginator>
   </div>
 </div>

@@ -125,14 +125,36 @@ h3.ce-header {
 .p-virtualscroller .p-virtualscroller-content {
   background: var(--surface-b);
 }
-.p-card {
-  box-shadow: 0 2px 1px -1px var(--text-color), 0 1px 1px 0 var(--text-color),
-  0 1px 3px 0 var(--text-color);
-}
 .p-card-hide {
   background: var(--surface-a);
   color: var(--text-color);
   border-radius: 3px;
+}
+
+.p-paginator {
+  padding: 0;
+}
+
+.page {
+  font-size: 100%;
+}
+.page p {
+  margin: 9px;
+}
+.page h1 {
+  font-size: 225%;
+  line-height: 2rem;
+  margin: 0;
+}
+.page h2 {
+  font-size: 150%;
+  line-height: 1.5rem;
+  margin: 0;
+}
+.page h3 {
+  font-size: 150%;
+  line-height: 1.25rem;
+  margin: 0;
 }
 
 .freehand {

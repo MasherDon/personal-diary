@@ -53,7 +53,7 @@ export class RecordsComponent {
           records[n].date = new Date(records[n].date);
 
           if (records[n].title.length>12) {
-            records[n].title = records[n].title.slice(0, 11) + ' ...';
+            records[n].title = records[n].title.slice(0, 11) + '...';
           } else {
             records[n].title = records[n].title.slice(0, 11);
           }
@@ -108,7 +108,7 @@ export class RecordsComponent {
 
   height() {
     const cap = document.getElementById('cap') as HTMLLinkElement;
-    return `${document.documentElement.clientHeight - cap.offsetHeight - 16}px`
+    return `${document.documentElement.clientHeight - cap.offsetHeight}px`
   }
 
   width() {
